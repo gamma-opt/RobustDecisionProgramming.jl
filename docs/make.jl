@@ -2,9 +2,15 @@ using Documenter
 using RobustDecisionProgramming
 
 makedocs(
-    sitename = "RobustDecisionProgramming",
+    sitename = "RobustDecisionProgramming.jl",
     format = Documenter.HTML(),
-    modules = [RobustDecisionProgramming]
+    modules = [RobustDecisionProgramming],
+    pages = [
+        "Home" => "index.md",
+        "robust-optimization.md",
+        "robust-decision-programming.md",
+        "api.md"
+    ]
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.

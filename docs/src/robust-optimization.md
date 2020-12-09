@@ -1,50 +1,72 @@
 # Robust Optimization
+## Introduction
+Focus on distributionally robust over discrete probability distributions. Best worst-case analysis.
+
+We denote scalar using lower-case math italics, vectors using lower-case boldface symbols, and sets using upper-case symbols. All non-matrix algebra operations on vectors are element-wise.
+
+
 ## Discrete Probabilities
-We define a set of finite discrete probabilities for states $I=\{1,2,...,k\}$ as
+We denote a finite set of discrete probabilities for states $I=\{1,2,...,k\}$ as
 
 $$𝐩=(p_1,p_2,...,p_k),$$
 
-such that $𝐩≥0$ and $𝐩⋅𝟏(k)=1.$ We denote a vector of $k$ ones as $𝟏(k)=(1)^k.$
-
-We denote vector using boldface symbols. All non-matrix algebra operations on vectors are element-wise.
+such that $𝐩≥0$ and $𝐩⋅𝟏(k)=1$ where $𝟏(k)=(1)^k$ is a vector of $k$ ones.
 
 
 ## Difference
-Given two finite sets of probabilities $𝐩=(p_1,p_2,...,p_k)$ and $𝐪=(q_1,q_2,...,q_k).$ We define the difference between the distributions as
+Given two finite sets of discrete probabilities $𝐩$ and $𝐪$ over states $I,$ we define the difference between the distributions as
 
 $$𝐝=𝐩-𝐪.$$
 
-Given the properties of discrete probabilities, we have
+From the properties of discrete probabilities, we have
 
-$$𝟏(k)⋅𝐝=𝟏(k)⋅(𝐩-𝐪)=𝟏(k)⋅𝐩-𝟏(k)⋅𝐪=0.$$
+$$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
 
-The differences are bounded as
+We obtain the bounds for the values of the differences by taking the minimum and maximum over the set of all possible differences. Since the value of probabilities are between zero and one, we have
 
 $$-1≤𝐝≤1.$$
 
 
 ## Uncertainty Sets
-We define the **difference set** as
+We can reformulate the difference equation such when difference $𝐝$ added to the original distribution $𝐩$ yield the new distribution $𝐪$ as
 
-$$𝐃=\{𝐝∣-1≤𝐝≤1,\, 𝟏(k)⋅𝐝=0,\, 𝐩+𝐝≥0\}.$$
+$$𝐪=𝐩+𝐝$$
 
-Let $\mathcal{C}:𝐃→\{⊥,⊤\}$ be a constraint (boolean function) that limits the magnitude of the difference. Then
+The **difference set** consists of all possible difference vectors that yield a valid distribution when added to the original distribution
+
+$$𝐃=\{𝐝∣-1≤𝐝≤1,\, 𝐝⋅𝟏(k)=0,\, 𝐩+𝐝≥0\}.$$
+
+We can define a boolean function to limit the magnitude of the difference vectors as
+
+$$\mathcal{C}:𝐃→\{⊥,⊤\}.$$
+
+We filter the difference set using the boolean function as a constraint into an **ambiguity set**
 
 $$Δ = \{d∈𝐃∣\mathcal{C}(𝐝)\}$$
 
-Choosing the constraint $\mathcal{C}$ is a design choise.
+The function $\mathcal{C}$ is a design choice. We discuss concrete choices of the function later.
 
-**Uncertainty set** defines all distributions $𝐪=𝐩+𝐝$ within difference $𝐝$ from $𝐩.$ Formally,
+Properties of $\mathcal{C}$, convexity of $Δ$, polyhedral sets.
 
-$$𝐐=\{𝐩+𝐝∣𝐝∈Δ\}$$
+The **uncertainty set** consists of all distributions  within difference $𝐝∈Δ$ from $𝐩$ as
+
+$$𝐐=\{𝐩+𝐝∣𝐝∈Δ\}.$$
 
 
 ## Minimum Expected Value
-Let $𝐮=(u_1,u_2,...,u_k)∈ℝ^k$ be a vector of real numbers associated with states $I.$
+We define a vector of real numbers associated with states $I$ as
+
+$$𝐮=(u_1,u_2,...,u_k)∈ℝ^k$$
 
 Then, we define the minimum expected value as
 
 $$\min_{𝐪∈𝐐} 𝐪⋅𝐮 = \min_{𝐝∈Δ} (𝐩+𝐝)⋅𝐮 = 𝐩⋅𝐮 + \min_{𝐝∈Δ} 𝐝⋅𝐮.$$
+
+To formulate the minimization problem as a discrete optimization formulation, we need to reduce $Δ$ to a discrete set of possible difference vectors $Δ^{-}$ such that $𝐝^{-}∈Δ^{-}$ where
+
+$$𝐝^{-}=\argmin_{𝐝∈Δ} 𝐝⋅𝐮.$$
+
+We define the following lemma for solving the problem:
 
 ---
 
@@ -58,35 +80,81 @@ u_1 d_1 + u_2 d_2 &= u_1 d_1^{′}+ u_1 d_1^{′′}+u_2 d_2 \\
 
 where $d_1=d_1^{′}+d_1^{′′}$ such that $d_1^{′}>d_1$ and $d_1^{′′}>d_1.$
 
+Assign smallest $d$ to highest $u$ and vice versa.
+
 ---
 
-Using lemma, we can solve the minimization problem
+Generate solution for each permutation
 
-$$\min_{𝐝∈Δ} 𝐝⋅𝐮$$
+$$u_{1}≥u_{2}≥...≥u_{k}$$
 
-If we do not have any information about the ordering of $𝐮,$ we can generate all permutations of $\{1,2,...,k\}$ to cover all possible orderings $u_1^{′}≥u_2^{′}≥...≥u_k^{′}$ to obtain discrete uncertainty set $Δ^{′}⊆Δ$ that contains all possible $𝐝$ that can minimize the expected value given constraint $\mathcal{C}$.
+If we do not have any information about the ordering of $𝐮,$ we can generate all permutations to cover all possible orderings
 
-Let $\mathcal{P}(𝐮)$ define the set of all permutations of vector $𝐮.$
+Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
+
+$𝐝^{-}(I^{′})$ assuming order $u_{i_1}≥u_{i_2}≥...≥u_{i_k}$ where $I^{′}=\{i_1,i_2,...,i_k\}$
+
+$$Δ^{-}=\{𝐝^{-}(I^{′})∣I^{′}∈\mathcal{P}(I)\}$$
 
 
 ## Maximin
+The discrete set of all possible minimizing distributions
+
+$$𝐐^{-}=\{𝐩+𝐝∣𝐝∈Δ^{-}\}$$
+
 Maximize the minimum expected value
 
-$$\max_{z∈Z} \min_{𝐪∈𝐐(z)} 𝐪⋅𝐮(z)$$
+$$\max_{z∈Z} \min_{𝐪∈𝐐^{-}(z)} 𝐪⋅𝐮(z)$$
 
-Linearized
+Now we can linearize the objective as
 
 $$\max_{z∈Z} x$$
 
-$$x≤𝐪⋅𝐮(z),\quad ∀𝐪∈𝐐(z)$$
+$$x≤𝐪⋅𝐮(z),\quad ∀𝐪∈𝐐^{-}(z)$$
 
 
 ## Wasserstein Distance
 $\mathcal{C}(𝐝)$ is equivalent to
 
-$$\|𝐝\|_1=2ϵ$$
+$$\|𝐝\|_1≤2ϵ$$
 
-where $0≤ϵ≤1$ is parameter
+where $0≤ϵ≤1$ is a parameter
+
+---
+
+$$\begin{aligned}
+\min &\, d_1 u_1 +d_2 u_2 +...+d_k u_k \\
+& d_1+d_2+...+d_k=0 \\
+& |d_1|+|d_2|+...+|d_k|≤2ϵ \\
+& p_i + d_i ≥ 0,\quad ∀i∈\{1,2,...,k\} \\
+& d_i∈ℝ,\quad ∀i∈\{1,2,...,k\}
+\end{aligned}$$
+
+---
+
+Solution. Let $u_1≥u_2≥...≥u_k$ and $k>1.$
+
+$$ϵ^{′}=\min\{ϵ,1-p_k\}$$
+
+Decrease the probability of best outcomes:
+
+$$\begin{aligned}
+m_1 &= ϵ^{′} \\
+d_1 &= -\min\{m_1,p_1\} \\
+m_2 &= m_1 + d_1 \\
+d_2 &= -\min\{m_2,p_2\},\quad m_2 > 0 \\
+&⋮
+\end{aligned}$$
+
+Increase the probability of worst outcomes.
+
+$$d_k=ϵ^{′}$$
+
+Difference vector
+
+$$𝐝^{-}=(d_1,d_2,...,d_k)$$
+
+Set of all difference vectors
 
 
 ## Intervals

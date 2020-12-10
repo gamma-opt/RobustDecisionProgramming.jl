@@ -4,6 +4,7 @@ Focus on distributionally robust over discrete probability distributions. Best w
 
 We denote scalar using lower-case math italics, vectors using lower-case boldface symbols, and sets using upper-case symbols. All non-matrix algebra operations on vectors are element-wise.
 
+We denote vector constructors using $(element∣condition)$ and set constructors using $\{element∣condition\}.$
 
 ## Discrete Probabilities
 We denote a finite set of discrete probabilities for states $I=\{1,2,...,k\}$ as
@@ -97,7 +98,7 @@ $𝐝^{-}(I^{′})$ assuming order $u_{i_1}≥u_{i_2}≥...≥u_{i_k}$ where $I^
 $$Δ^{-}=\{𝐝^{-}(I^{′})∣I^{′}∈\mathcal{P}(I)\}$$
 
 
-## Maximin
+## Maximin over Uncertainty Set
 The discrete set of all possible minimizing distributions
 
 $$𝐐^{-}=\{𝐩+𝐝∣𝐝∈Δ^{-}\}$$
@@ -113,8 +114,21 @@ $$\max_{z∈Z} x$$
 $$x≤𝐪⋅𝐮(z),\quad ∀𝐪∈𝐐^{-}(z)$$
 
 
+## Maximin over Product of Uncertainty Sets
+
+$$\max_{z∈Z} x$$
+
+$$x ≤ \min_{(𝐪_1,...,𝐪_m)∈𝐐^{×}(z)} ∑_{i=1}^m 𝐪_i⋅𝐮_i(z),\quad 𝐐^{×}(z)=∏_{i=1}^m 𝐐_i^{-}(z)$$
+
+Linearized
+
+$$x ≤ ∑_{i=1}^m x_i$$
+
+$$x_i ≤ 𝐪_i⋅𝐮_i(z),\quad ∀i∈\{1,...,m\}$$
+
+
 ## Wasserstein Distance
-$\mathcal{C}(𝐝)$ is equivalent to
+Mean that $\mathcal{C}(𝐝)$ is equivalent to
 
 $$\|𝐝\|_1≤2ϵ$$
 
@@ -158,7 +172,7 @@ Set of all difference vectors
 
 
 ## Intervals
-$\mathcal{C}(𝐝)$ is equivalent to
+Means that $\mathcal{C}(𝐝)$ is equivalent to
 
 $$0≤𝐝^{-} ≤ 𝐝 ≤ 𝐝^{+}≤1$$
 

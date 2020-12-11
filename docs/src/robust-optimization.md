@@ -63,7 +63,7 @@ Then, we define the minimum expected value as
 
 $$\min_{𝐪∈𝐐} 𝐪⋅𝐮 = \min_{𝐝∈Δ} (𝐩+𝐝)⋅𝐮 = 𝐩⋅𝐮 + \min_{𝐝∈Δ} 𝐝⋅𝐮.$$
 
-To formulate the minimization problem as a discrete optimization formulation, we need to reduce $Δ$ to a discrete set of possible difference vectors $Δ^{-}$ such that $𝐝^{-}∈Δ^{-}$ where
+To formulate the minimization problem as a discrete optimization formulation, we need to reduce $Δ$ to a discrete set of possible difference vectors $Δ^{-}$ such that with known $𝐮$ we have $𝐝^{-}∈Δ^{-}$ where
 
 $$𝐝^{-}=\argmin_{𝐝∈Δ} 𝐝⋅𝐮.$$
 
@@ -97,12 +97,12 @@ $𝐝^{-}(I^{′})$ assuming order $u_{i_1}≥u_{i_2}≥...≥u_{i_k}$ where $I^
 
 $$Δ^{-}=\{𝐝^{-}(I^{′})∣I^{′}∈\mathcal{P}(I)\}$$
 
-
-## Maximin over Uncertainty Set
 The discrete set of all possible minimizing distributions
 
 $$𝐐^{-}=\{𝐩+𝐝∣𝐝∈Δ^{-}\}$$
 
+
+## Maximin over Uncertainty Set
 Maximize the minimum expected value
 
 $$\max_{z∈Z} \min_{𝐪∈𝐐^{-}(z)} 𝐪⋅𝐮(z)$$
@@ -115,16 +115,19 @@ $$x≤𝐪⋅𝐮(z),\quad ∀𝐪∈𝐐^{-}(z)$$
 
 
 ## Maximin over Product of Uncertainty Sets
+We define the product of uncertainty sets a
 
-$$\max_{z∈Z} x$$
+$$𝐐^{×}(z)=∏_{i=1}^m 𝐐_i^{-}(z)$$
 
-$$x ≤ \min_{(𝐪_1,...,𝐪_m)∈𝐐^{×}(z)} ∑_{i=1}^m 𝐪_i⋅𝐮_i(z),\quad 𝐐^{×}(z)=∏_{i=1}^m 𝐐_i^{-}(z)$$
+Maximize the minimum expected value
+
+$$\max_{z∈Z} \min_{(𝐪_1,...,𝐪_m)∈𝐐^{×}(z)} ∑_{i=1}^m 𝐪_i⋅𝐮_i(z)$$
 
 Linearized
 
-$$x ≤ ∑_{i=1}^m x_i$$
+$$\max_{z∈Z} ∑_{i=1}^m x_i$$
 
-$$x_i ≤ 𝐪_i⋅𝐮_i(z),\quad ∀i∈\{1,...,m\}$$
+$$x_i ≤ 𝐪⋅𝐮_i(z),\quad ∀𝐪∈𝐐_i^{-}, ∀i∈\{1,...,m\}$$
 
 
 ## Wasserstein Distance

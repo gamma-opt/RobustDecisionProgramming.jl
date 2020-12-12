@@ -117,17 +117,17 @@ $$x≤𝐪⋅𝐮(z),\quad ∀𝐪∈𝐐^{-}(z)$$
 ## Maximin over Product of Uncertainty Sets
 We define the product of uncertainty sets a
 
-$$𝐐^{×}(z)=∏_{i=1}^m 𝐐_i^{-}(z)$$
+$$𝐐^{×}(z)=∏_{l=1}^m 𝐐_l^{-}(z)$$
 
 Maximize the minimum expected value
 
-$$\max_{z∈Z} \min_{(𝐪_1,...,𝐪_m)∈𝐐^{×}(z)} ∑_{i=1}^m 𝐪_i⋅𝐮_i(z)$$
+$$\max_{z∈Z} \min_{(𝐪_1,...,𝐪_m)∈𝐐^{×}(z)} ∑_{l=1}^m 𝐪_l⋅𝐮_l(z)$$
 
 Linearized
 
-$$\max_{z∈Z} ∑_{i=1}^m x_i$$
+$$\max_{z∈Z} ∑_{l=1}^m x_l$$
 
-$$x_i ≤ 𝐪⋅𝐮_i(z),\quad ∀𝐪∈𝐐_i^{-}, ∀i∈\{1,...,m\}$$
+$$x_l ≤ 𝐪⋅𝐮_l(z),\quad ∀𝐪∈𝐐_l^{-}, ∀l∈\{1,...,m\}$$
 
 
 ## Wasserstein Distance

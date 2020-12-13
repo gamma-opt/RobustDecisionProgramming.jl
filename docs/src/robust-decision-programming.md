@@ -42,6 +42,6 @@ Linearization of the problem
 
 $$\underset{Z∈ℤ}{\text{maximize}} ∑_{s_{I(i)}∈S_{I(i)}} x_{s_{I(i)}}$$
 
-$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} π_d(𝐬)⋅\mathcal{U}(𝐬),\quad ∀d_{s_{I(i)}}∈Δ_{s_{I(i)}},\, s_{I(i)}∈S_{I(i)}$$
+$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} π_d(𝐬)⋅\mathcal{U}(𝐬),\quad ∀d(s_{I(i)})∈Δ(s_{I(i)}),\, s_{I(i)}∈S_{I(i)}$$
 
 $$π_d(𝐬)↔ℙ_{d_i}(X=𝐬∣Z)$$

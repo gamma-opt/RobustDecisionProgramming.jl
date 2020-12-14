@@ -5,6 +5,8 @@ using DecisionProgramming
 using RobustDecisionProgramming
 using Base.Iterators: product
 
+include("brute.jl")
+
 rng = MersenneTwister(22)
 
 S = States([2, 2, 3])

@@ -17,5 +17,5 @@ makedocs(
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
 deploydocs(
-    repo = "github.com/jaantollander/RobustDecisionProgramming.jl.git"
+    repo = "github.com/gamma-opt/RobustDecisionProgramming.jl.git"
 )

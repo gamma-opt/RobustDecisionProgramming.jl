@@ -1,40 +1,36 @@
 # Uncertainty Sets
 ## Continuous Uncertainty Set
-Given two finite sets of discrete probabilities $𝐩$ and $𝐪$ over states $I,$ we define the difference between the distributions as
+Given two finite sets of discrete probabilities $𝐩$ and $𝐪$ over states $I,$ we define the **difference** between the distributions as
 
-$$𝐝=𝐩-𝐪.$$
+$$𝐝=𝐪-𝐩.$$
 
-From the properties of discrete probabilities, we have
+As a consequence from the properties of discrete probabilities, the **sum of the differences is zero**
 
 $$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
 
-We obtain the bounds for the values of the differences by taking the minimum and maximum over the set of all possible differences. Since the value of probabilities are between zero and one, we have
+We can also obtain the bounds for the values of the differences by taking the minimum and maximum over the set of all possible differences. Since the value of probabilities are between zero and one, we have
 
 $$-1≤𝐝≤1.$$
 
-We can reformulate the difference equation such when difference $𝐝$ added to the original distribution $𝐩$ yield the new distribution $𝐪$ as
+We can reformulate the difference equation into a form
 
 $$𝐪=𝐩+𝐝$$
 
-The **difference set** consists of all possible difference vectors that yield a valid distribution when added to the original distribution
+The **difference set** consists of all possible difference vectors $𝐝$ that yield a valid distribution when added to the distribution $𝐩.$ Formally,
 
-$$𝐃=\{𝐝∣-1≤𝐝≤1,\, 𝐝⋅𝟏(k)=0,\, 𝐩+𝐝≥0\}.$$
+$$𝐃_𝐩=\{𝐝∣-1≤𝐝≤1,\, 𝐝⋅𝟏(k)=0,\, 𝐩+𝐝≥0\}.$$
 
-We can define a boolean function to limit the magnitude of the difference vectors as
+Next, we define an **ambiguity set** as a subset of differences set
 
-$$\mathcal{C}:𝐃→\{⊥,⊤\}.$$
+$$\bar{Δ}_𝐩 = \{𝐝∈𝐃_𝐩∣\mathcal{C}(𝐝)\}$$
 
-We filter the difference set using the boolean function as a constraint into an **ambiguity set**
+The constraint (boolean function) $\mathcal{C}$ limits the elements' magnitude. We need to choose the constraint $\mathcal{C}$ such that the resulting set is convex, which makes optimization possible. We discuss concrete choices that yield polyhedral sets later.
 
-$$\bar{Δ} = \{𝐝∈𝐃∣\mathcal{C}(𝐝)\}$$
-
-The function $\mathcal{C}$ is a design choice. We discuss concrete choices of the function later.
-
-Properties of $\mathcal{C}$, convexity of $\bar{Δ}$, polyhedral sets.
-
-The **continuous uncertainty set** consists of all distributions  within difference $𝐝∈\bar{Δ}$ from $𝐩$ as
+Finally, we define the **continuous uncertainty set** that consists of all distributions within difference $𝐝∈\bar{Δ}$ from $𝐩$
 
 $$\bar{𝐐}=\{𝐩+𝐝∣𝐝∈\bar{Δ}\}.$$
+
+However, we cannot use a continuous uncertainty set directly for formulating the mathematical model. We must discretize it first.
 
 
 ## Discretization

@@ -8,6 +8,10 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "robust-optimization.md",
+        "Distributional Robustness" => Any[
+            "best-worst-case-expected-value.md",
+            "uncertainty-sets.md",
+            ],
         "robust-decision-programming.md",
         "api.md"
     ]

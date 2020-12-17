@@ -27,28 +27,28 @@ The uncertainty set encapsulates the uncertainty in the probabilities. Given pro
 ### Maximin Expected Value
 We define the problem as maximizing the minimum expected value over decision variables $Z$
 
-$$\max_{z∈Z} \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
+$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
 
 Next, we linearize the expression to a form
 
-$$\max_{z∈Z} x$$
+$$\underset{z∈Z}{\operatorname{maximize}}\, x$$
 
 $$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
 
 ### Minimax Regret
 Solve the original, non-robust problem by maximizing the expected value over decision variables $Z$
 
-$$μ^{∗}=\max_{z∈Z} 𝔼(𝐩,𝐮).$$
+$$μ^{∗}=\underset{z∈Z}{\operatorname{maximize}}\, 𝔼(𝐩,𝐮(z)).$$
 
 We formulate the minimization of the maximum regret as
 
-$$\min_{z∈Z} \max_{𝐪∈𝐐_𝐩} (μ^{∗}-𝔼(𝐪, 𝐮(z)))$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, \max_{𝐪∈𝐐_𝐩} (μ^{∗}-𝔼(𝐪, 𝐮(z)))$$
 
-$$=\min_{z∈Z} (μ^{∗} - \min_{𝐪∈𝐐_𝐩} 𝔼(𝐪, 𝐮(z))$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, (μ^{∗} - \min_{𝐪∈𝐐_𝐩} 𝔼(𝐪, 𝐮(z))$$
 
 Next, we linearize the expression to a form
 
-$$\min_{z∈Z} (μ^{∗}-x)$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, (μ^{∗}-x)$$
 
 $$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐_𝐩$$
 
@@ -63,27 +63,27 @@ The probabilities in decision programming will appear in the product form.
 ### Maximin Expected Value
 We define the problem as maximizing the minimum expected value over decision variables $Z$
 
-$$\max_{z∈Z} \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z))$$
+$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z))$$
 
 Next, we linearize the expression to a form
 
-$$\max_{z∈Z} ∑_{l=1}^m x_l$$
+$$\underset{z∈Z}{\operatorname{maximize}}\, ∑_{l=1}^m x_l$$
 
 $$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{𝐩_l},\, l∈\{1,...,m\}$$
 
 ### Minimax Regret
 Solve the original, non-robust problem by maximizing the expected value over decision variables $Z$
 
-$$μ^{∗}=\max_{z∈Z} ∑_{l=1}^m 𝔼(𝐩_l, 𝐮_l(z))$$
+$$μ^{∗}=\underset{z∈Z}{\operatorname{maximize}}\, ∑_{l=1}^m 𝔼(𝐩_l, 𝐮_l(z))$$
 
 We formulate the minimization of the maximum regret as
 
-$$\min_{z∈Z} \max_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} (μ^{∗}-∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, \max_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} (μ^{∗}-∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
 
-$$=\min_{z∈Z} (μ^{∗} - \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, (μ^{∗} - \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
 
 Next, we linearize the expression to a form
 
-$$\min_{z∈Z} (μ^{∗} - ∑_{l=1}^m x_l)$$
+$$\underset{z∈Z}{\operatorname{minimize}}\, (μ^{∗} - ∑_{l=1}^m x_l)$$
 
 $$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{𝐩_l},\, l∈\{1,...,m\}$$

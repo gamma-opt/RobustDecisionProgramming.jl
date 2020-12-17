@@ -44,11 +44,13 @@ We formulate the minimization of the maximum regret as
 
 $$\min_{z∈Z} \max_{𝐪∈𝐐_𝐩} (μ^{∗}-𝔼(𝐪, 𝐮(z)))$$
 
+$$=\min_{z∈Z} (μ^{∗} - \min_{𝐪∈𝐐_𝐩} 𝔼(𝐪, 𝐮(z))$$
+
 Next, we linearize the expression to a form
 
-$$\min_{z∈Z} x$$
+$$\min_{z∈Z} (μ^{∗}-x)$$
 
-$$x≥μ^{∗}-𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐_𝐩$$
+$$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐_𝐩$$
 
 
 ## Best Worst-Case over Product Uncertainty Set
@@ -78,8 +80,10 @@ We formulate the minimization of the maximum regret as
 
 $$\min_{z∈Z} \max_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} (μ^{∗}-∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
 
+$$=\min_{z∈Z} (μ^{∗} - \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z)))$$
+
 Next, we linearize the expression to a form
 
-$$\min_{z∈Z} ∑_{l=1}^m x_l$$
+$$\min_{z∈Z} (μ^{∗} - ∑_{l=1}^m x_l)$$
 
-$$x_l ≥ μ^{∗} - 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{𝐩_l},\, l∈\{1,...,m\}$$
+$$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{𝐩_l},\, l∈\{1,...,m\}$$

@@ -42,39 +42,91 @@ We can express the minimizing difference as
 
 $$𝐝^{∗}(𝐮)=\argmin_{𝐝∈\bar{Δ}_𝐩} 𝐝⋅𝐮.$$
 
-Due to the structure of difference vectors $𝐝,$ the minimizing difference vector $𝐝^{∗}(𝐮)$ only depends on the orderings of $𝐮.$ For example, an ordering is $u_1≥u_2≥...≥u_k$ and its corresponding vector of indices is $I^{′}=(1,2,...,k).$
-
----
-
-Proof that minizing difference depends only in the ordering.
-
----
-
-Therefore, we can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$ There are a finite amount of permutations $|\mathcal{P}(I)|=k!.$
-
 Now, we can obtain a discrete ambiguity set
 
-$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
+$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}.$$
 
 The discrete set of all possible minimizing distributions
 
 $$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈Δ_𝐩\}.$$
 
----
 
-We define the following lemma for solving the problem:
-
-Lemma: If $u_1>u_2$ and $d_1<d_2≤0,$ then:
+## Cross-Assignment
+### Minimizing Difference
+We state the minimization problem with polyhedral set $Ω⊆ℝ^k$ as
 
 $$\begin{aligned}
-u_1 d_1 + u_2 d_2 &= u_1 d_1^{′}+ u_1 d_1^{′′}+u_2 d_2 \\
-&< u_1 d_1^{′} + u_2 d_1^{′′} + u_2 d_2 \\
-&= u_1 d_1^{′} + u_2 (d_1^{′′} + d_2)
+\argmin_{(d_1,...,d_k)∈Ω} &\, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k, \\
+& d_1+d_2+...+d_k=0.
 \end{aligned}$$
 
-where $d_1=d_1^{′}+d_1^{′′}$ such that $d_1^{′}>d_1$ and $d_1^{′′}>d_1.$
+We can define rules for finding the minimizing difference vector $𝐝$ using **cross-assignment**, which depends only on the ordering of vector $𝐮.$ The following sections show that we always have difference vector that evaluates to less or equal to zero. After that, we state the rules for finding the minimizing difference vector.
 
-Assign smallest $d$ to highest $u$ and vice versa.
+### Binary cross-assignment
+Let $u_1≤u_2$ and $d_1+d_2=0$ where $d_1≥0$ and $d_2≤0$. Then we have
+
+$$\begin{aligned}
+u_1⋅d_1 + u_2⋅d_2 &≤ 0 \\
+u_1⋅d_1 &≤ u_2⋅(-d_2) \\
+u_1⋅d_1 &≤ u_2⋅d_1 \\
+u_1 &≤ u_2
+\end{aligned}$$
+
+### $k$-ary cross-assignment
+Let $u_1≤u_2≤...≤u_k$ and $d_1+d_2+...+d_k=0$.
+
+Then, for all $j∈\{1,...,k-1\}$ such that $d_1,...,d_j≥0$ and $d_{j+1},...,d_k≤0$ we have
+
+$$\begin{aligned}
+u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1} + ... + u_{j+1}⋅d_{k} \\
+&= u_j⋅(d_1+...+d_j) + u_{j+1}⋅(d_{j+1}+...+d_k) \\
+& ≤ 0.
+\end{aligned}$$
+
+We obtain the last step from binary cross-assignment.
+
+### Minimizing cross-assignment
+Let $u_1≤u_2$ and $d_1+d_2=d_1^{′}+d_2^{′}.$ Then
+
+$$u_1⋅d_1+u_2⋅d_2≤u_1⋅d_1^{′}+u_2⋅d_2^{′}$$
+
+---
+
+Let $d_1,d_2,d_1^{′},d_2^{′},d^{′′}≤0.$ Then
+
+$$\begin{aligned}
+u_1⋅d_1+u_2⋅d_2 &= u_1⋅d_1+u_2⋅(d_2^{′}+d^{′′}) \\
+&= u_1⋅d_1+u_2⋅d^{′′}+u_2⋅d_2^{′} \\
+&≤ u_1⋅d_1+u_1⋅d^{′′}+u_2⋅d_2^{′} \\
+&= u_1⋅(d_1+d^{′′})+u_2⋅d_2^{′} \\
+&= u_1⋅d_1^{′}+u_2⋅d_2^{′},
+\end{aligned}$$
+
+where $d_1=d_1^{′}-d^{′′}$ and $d_2=d_2^{′}+d^{′′}.$
+
+---
+
+Let $d_1,d_2,d_1^{′},d_2^{′},d^{′′}≥0.$ Then
+
+$$\begin{aligned}
+u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
+&= u_1⋅d_1^{′}+u_1⋅d^{′′}+u_2⋅d_2 \\
+&≤ u_1⋅d_1^{′}+u_2⋅d^{′′}+u_2⋅d_2 \\
+&= u_1⋅d_1^{′}+u_2⋅(d_2+d^{′′}) \\
+&= u_1⋅d_1^{′}+u_2⋅d_2^{′},
+\end{aligned}$$
+
+where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}.$
+
+
+## Polyhedral Uncertainty Set
+The minimizing difference vector $𝐝^{∗}(𝐮)$ only depends on the ordering of $𝐮,$ but not of the numerical values, when minimizing over polyhedral uncertainty sets.
+
+For example, a ordering is $u_1≥u_2≥...≥u_k$ and its corresponding vector of indices is $I^{′}=(1,2,...,k).$
+
+We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$ There are a finite amount of permutations $|\mathcal{P}(I)|=k!.$
+
+$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
 
 
 ## Wasserstein Distance

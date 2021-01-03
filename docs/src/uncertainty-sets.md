@@ -51,16 +51,25 @@ The discrete set of all possible minimizing distributions
 $$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈Δ_𝐩\}.$$
 
 
-## Cross-Assignment
-### Minimizing Difference
-We state the minimization problem with polyhedral set $Ω⊆ℝ^k$ as
+## Polyhedral Uncertainty Set
+We state the minimization problem over polyhedral ambiguity set as
 
 $$\begin{aligned}
-\argmin_{(d_1,...,d_k)∈Ω} &\, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k, \\
-& d_1+d_2+...+d_k=0.
+\argmin_{(d_1,...,d_k)∈ℝ^k} &\, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k, \\
+& d_1+d_2+...+d_k=0 \\
+& d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\} \\
+& |d_1|+|d_2|+...+|d_k|≤ϵ.
 \end{aligned}$$
 
-We can define rules for finding the minimizing difference vector $𝐝$ using **cross-assignment**, which depends only on the ordering of vector $𝐮.$ The following sections show that we always have difference vector that evaluates to less or equal to zero. After that, we state the rules for finding the minimizing difference vector.
+The parameters for difference intervals, $d_i^{-} ≤ d_i ≤ d_i^{+},$ are **lower bound** $-p_i≤d_i^{-}≤0$ and **upper bound** $0≤d_i^{+}≤1-p_i$ for all $i∈\{1,...,k\}.$
+
+The parameter for the Wasserstein distance, $\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤ϵ,$ is the **radius** $0≤ϵ≤2.$
+
+
+## Cross-Assignment
+Given an ordering of vector $𝐮$, such as $u_1≤u_2≤...≤u_k,$ we can find the minimizing difference vector $𝐝$ over polyhedral ambiguity set using **cross-assignment**. We can construct the set of all minimizing difference vectors by using cross-assignment over all possible orderings of vector $𝐮.$
+
+The following sections show that we always have difference vector that evaluates to less or equal to zero. After that, we state the rules for finding the minimizing difference vector.
 
 ### Binary cross-assignment
 Let $u_1≤u_2$ and $d_1+d_2=0$ where $d_1≥0$ and $d_2≤0$. Then we have
@@ -118,56 +127,9 @@ u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
 
 where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}.$
 
-
-## Polyhedral Uncertainty Set
-The minimizing difference vector $𝐝^{∗}(𝐮)$ only depends on the ordering of $𝐮,$ but not of the numerical values, when minimizing over polyhedral uncertainty sets.
-
-For example, a ordering is $u_1≥u_2≥...≥u_k$ and its corresponding vector of indices is $I^{′}=(1,2,...,k).$
-
-We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$ There are a finite amount of permutations $|\mathcal{P}(I)|=k!.$
+### All Orderings
+An ordering is $u_1≥u_2≥...≥u_k$ and its corresponding vector of indices is $I^{′}=(1,2,...,k).$ We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
 
 $$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
 
-
-## Wasserstein Distance
-The constraint $\mathcal{C}(𝐝)$ is equivalent to $\|𝐝\|_1≤2ϵ$ where $0≤ϵ≤1$ is a parameter that limits the norm.
-
----
-
-$$\begin{aligned}
-\min &\, d_1 u_1 +d_2 u_2 +...+d_k u_k \\
-& d_1+d_2+...+d_k=0 \\
-& |d_1|+|d_2|+...+|d_k|≤2ϵ \\
-& p_i + d_i ≥ 0,\quad ∀i∈\{1,2,...,k\} \\
-& d_i∈ℝ,\quad ∀i∈\{1,2,...,k\}
-\end{aligned}$$
-
----
-
-Solution. Let $u_1≥u_2≥...≥u_k$ and $k>1.$
-
-$$ϵ^{′}=\min\{ϵ,1-p_k\}$$
-
-Decrease the probability of best outcomes:
-
-$$\begin{aligned}
-m_1 &= ϵ^{′} \\
-d_1 &= -\min\{m_1,p_1\} \\
-m_2 &= m_1 + d_1 \\
-d_2 &= -\min\{m_2,p_2\},\quad m_2 > 0 \\
-&⋮
-\end{aligned}$$
-
-Increase the probability of worst outcomes.
-
-$$d_k=ϵ^{′}$$
-
-Difference vector
-
-$$𝐝^{∗}=(d_1,d_2,...,d_k)$$
-
-Set of all difference vectors
-
-
-## Probability Intervals
-The constraint $\mathcal{C}(𝐝)$ is equivalent to $0≤𝐝^{-} ≤ 𝐝 ≤ 𝐝^{+}≤1$ where $𝐝^{-}$ and $𝐝^{+}$ are parameters for upper and lower bounds of each probability.
+There are a finite amount of permutations $|\mathcal{P}(I)|=k!.$

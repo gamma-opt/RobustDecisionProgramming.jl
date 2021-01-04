@@ -12,19 +12,19 @@ function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float
     a = abs(d⁻[l] - d[l])
     b = abs(d⁺[h] - d[h])
     if a < b
-        c = min(2*a, ϵ)
-        d[l] += c/2
-        d[h] -= c/2
+        c = min(a, ϵ)
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l+1, h, d, d⁻, d⁺, ϵ - c)
     elseif a > b
-        c = min(2*b, ϵ)
-        d[l] += c/2
-        d[h] -= c/2
+        c = min(b, ϵ)
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l, h-1, d, d⁻, d⁺, ϵ - c)
     else
-        c = min(2*a, ϵ)
-        d[l] += c/2
-        d[h] -= c/2
+        c = min(a, ϵ)
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l+1, h-1, d, d⁻, d⁺, ϵ - c)
     end
 end
@@ -36,13 +36,13 @@ function cross_assignment(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vecto
     @assert length(d⁺) == k
     @assert all(d⁻ .≥ -p)
     @assert all(d⁺ .≤ 1-p)
-    @assert ϵ ≥ 0
+    @assert 0 ≤ ϵ ≤ 1
     d = zeros(k)
     cross_assignment(1, k, d, d⁻, d⁺, ϵ)
 end
 
 function cross_assignment(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})
-    cross_assignment(p, d⁻, d⁺, 2.0)
+    cross_assignment(p, d⁻, d⁺, 1.0)
 end
 
 function cross_assignment(p::Vector{Float64}, ϵ::Float64)

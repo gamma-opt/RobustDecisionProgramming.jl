@@ -58,12 +58,12 @@ $$\begin{aligned}
 \argmin_{(d_1,...,d_k)∈ℝ^k} &\, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k, \\
 & d_1+d_2+...+d_k=0 \\
 & d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\} \\
-& |d_1|+|d_2|+...+|d_k|≤ϵ.
+& |d_1|+|d_2|+...+|d_k|≤2ϵ.
 \end{aligned}$$
 
 The parameters for difference intervals, $d_i^{-} ≤ d_i ≤ d_i^{+},$ are **lower bound** $-p_i≤d_i^{-}≤0$ and **upper bound** $0≤d_i^{+}≤1-p_i$ for all $i∈\{1,...,k\}.$
 
-The parameter for the Wasserstein distance, $\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤ϵ,$ is the **radius** $0≤ϵ≤2.$
+The parameter for the Wasserstein distance, $\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ,$ is the **radius** $0≤ϵ≤1.$
 
 
 ## Cross-Assignment

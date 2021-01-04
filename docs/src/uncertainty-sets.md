@@ -52,22 +52,29 @@ $$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈Δ_𝐩\}.$$
 
 
 ## Polyhedral Uncertainty Set
-We state the minimization problem over polyhedral ambiguity set as
+We have the minimization problem over polyhedral ambiguity set with the objective
 
-$$\begin{aligned}
-\argmin_{(d_1,...,d_k)∈ℝ^k} &\, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k, \\
-& d_1+d_2+...+d_k=0 \\
-& d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\} \\
-& |d_1|+|d_2|+...+|d_k|≤2ϵ.
-\end{aligned}$$
+$$\argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k.$$
 
-The parameters for difference intervals, $d_i^{-} ≤ d_i ≤ d_i^{+},$ are **lower bound** $-p_i≤d_i^{-}≤0$ and **upper bound** $0≤d_i^{+}≤1-p_i$ for all $i∈\{1,...,k\}.$
+We have constraints for the difference sum, difference intervals and Wasserstein distance. The difference sum constraint is
 
-The parameter for the Wasserstein distance, $\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ,$ is the **radius** $0≤ϵ≤1.$
+$$d_1+d_2+...+d_k=0.$$
+
+The difference interval constraints are
+
+$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\}.$$
+
+The parameters are **lower bound** $-p_i≤d_i^{-}≤0$ and **upper bound** $0≤d_i^{+}≤1-p_i$ for all $i∈\{1,...,k\}.$
+
+The Wasserstein distance constraint is
+
+$$\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
+
+The **radius** parameter is $0≤ϵ≤1.$
 
 
 ## Cross-Assignment
-Given an ordering of vector $𝐮$, such as $u_1≤u_2≤...≤u_k,$ we can find the minimizing difference vector $𝐝$ over polyhedral ambiguity set using **cross-assignment**. We can construct the set of all minimizing difference vectors by using cross-assignment over all possible orderings of vector $𝐮.$
+Given an ordering of vector $𝐮$, such as $u_1≤u_2≤...≤u_k$ with corresponding vector of indices $I^{′}=(1,2,...,k),$ we can find the minimizing difference vector $𝐝^{∗}$ over polyhedral ambiguity set using **cross-assignment**.
 
 The following sections show that we always have difference vector that evaluates to less or equal to zero. After that, we state the rules for finding the minimizing difference vector.
 
@@ -78,7 +85,7 @@ $$\begin{aligned}
 u_1⋅d_1 + u_2⋅d_2 &≤ 0 \\
 u_1⋅d_1 &≤ u_2⋅(-d_2) \\
 u_1⋅d_1 &≤ u_2⋅d_1 \\
-u_1 &≤ u_2
+u_1 &≤ u_2.
 \end{aligned}$$
 
 ### $k$-ary cross-assignment
@@ -127,9 +134,10 @@ u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
 
 where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}.$
 
-### All Orderings
-An ordering is $u_1≥u_2≥...≥u_k$ and its corresponding vector of indices is $I^{′}=(1,2,...,k).$ We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
+
+## All Cross-assignments
+We can construct the set of all minimizing difference vectors by using cross-assignment over all possible orderings of vector $𝐮.$ We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
 
 $$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
 
-There are a finite amount of permutations $|\mathcal{P}(I)|=k!.$
+There are a finite amount of permutations $|\mathcal{P}(I)|=k!$ which implies $|Δ_𝐩|≤k!.$

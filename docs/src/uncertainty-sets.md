@@ -4,31 +4,47 @@ Given two finite sets of discrete probabilities $𝐩$ and $𝐪$ over states $I
 
 $$𝐝=𝐪-𝐩.$$
 
+---
+
+Since probabilities $𝐪=𝐩+𝐝$ cannot be less than zero or greater than one, we have the lower and upper bounds for differences as
+
+$$0≤𝐩+𝐝≤1$$
+
+$$-𝐩≤𝐝≤1-𝐩.$$
+
+Furthermore, we want to give **lower bounds** and **upper bounds** as parameters such that
+
+$$𝐝^{-}≤𝐝≤𝐝^{+},$$
+
+where $-𝐩≤𝐝^{-}≤0$ and $0≤𝐝^{+}≤1-𝐩,$ which quarantees that $𝐩$ belongs to the difference set.
+
+---
+
 As a consequence of the properties of discrete probabilities, the **sum of the differences is zero**
 
 $$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
 
-We can also obtain the bounds for the differences' values by taking the minimum and maximum over the set of all possible differences. Since the value of probabilities are between zero and one, we have
+---
 
-$$-1≤𝐝≤1.$$
+Additionally, we can limit the magnitude of the differences with $l∈ℕ$ norm
 
-We can reformulate the difference equation into a form
+$$\|𝐝\|_l≤2ϵ,$$
 
-$$𝐪=𝐩+𝐝$$
+with a **radius** parameter $0≤ϵ≤1.$
 
-The **difference set** consists of all possible difference vectors $𝐝$ that yield a valid distribution when added to the distribution $𝐩.$ Formally,
+---
 
-$$𝐃_𝐩=\{𝐝∣-1≤𝐝≤1,\, 𝐝⋅𝟏(k)=0,\, 𝐩+𝐝≥0\}.$$
+The **ambiguity set** consists of all possible difference vectors $𝐝$ that yield a valid distribution when added to the distribution $𝐩.$ Formally,
 
-Next, we define an **ambiguity set** as a subset of differences set
+$$𝐃_𝐩=\{𝐝∈[𝐝^{-},𝐝^{+}]∣ 𝐝⋅𝟏(k)=0,\, \|𝐝\|_l≤2ϵ\}.$$
 
-$$\bar{Δ}_𝐩 = \{𝐝∈𝐃_𝐩∣\mathcal{C}(𝐝)\}$$
+The ambiguity set is convex, which makes optimization possible. Decreasing $l$ makes the model more pessimistic. Using $l=1$ we receive a **polyhedral ambiguity set**.
 
-The constraint (boolean function) $\mathcal{C}$ limits the difference's magnitude. We need to choose the constraint $\mathcal{C}$ such that the resulting set is convex, which makes optimization possible. We discuss concrete choices that yield polyhedral sets later.
+---
 
-Finally, we define the **continuous uncertainty set** that consists of all distributions within difference $𝐝∈\bar{Δ}_𝐩$ from $𝐩$
+Finally, we define the **continuous uncertainty set** that consists of all distributions within difference $𝐝∈𝐃_𝐩$ from $𝐩$
 
-$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{Δ}_𝐩\}.$$
+$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈𝐃_𝐩\}.$$
 
 However, we cannot use a continuous uncertainty set directly for formulating the mathematical model. We must obtain a discrete subset of the continuous uncertainty set to linearize the minimum expected value in the [Best Worst-Case Expected Value](@ref) page.
 
@@ -36,11 +52,11 @@ However, we cannot use a continuous uncertainty set directly for formulating the
 ## Discretization
 We can define the minimum expected value over the continuous uncertainty set as
 
-$$\min_{𝐪∈\bar{𝐐}_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈\bar{Δ}_𝐩} (𝐩+𝐝)⋅𝐮 = 𝐩⋅𝐮 + \min_{𝐝∈\bar{Δ}_𝐩} 𝐝⋅𝐮.$$
+$$\min_{𝐪∈\bar{𝐐}_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈𝐃_𝐩} (𝐩+𝐝)⋅𝐮 = 𝐩⋅𝐮 + \min_{𝐝∈𝐃_𝐩} 𝐝⋅𝐮.$$
 
 We can express the minimizing difference as
 
-$$𝐝^{∗}(𝐮)=\argmin_{𝐝∈\bar{Δ}_𝐩} 𝐝⋅𝐮.$$
+$$𝐝^{∗}(𝐮)=\argmin_{𝐝∈𝐃_𝐩} 𝐝⋅𝐮.$$
 
 Now, we can obtain a discrete ambiguity set
 

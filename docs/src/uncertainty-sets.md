@@ -1,26 +1,34 @@
 # Uncertainty Sets
 ## Continuous Uncertainty Set
-Given two finite sets of discrete probabilities $𝐩$ and $𝐪$ over states $I,$ we define the **difference** between the distributions as
+Given two finite sets of discrete probabilities, the **pivot** $𝐩$ and **deviated** $𝐪$ over states $I.$ We define the **difference** between the distributions as
 
 $$𝐝=𝐪-𝐩.$$
 
----
+Alternatively, we can describe the deviated distribution as the sum of pivot distribution and difference
 
-Since probabilities $𝐪=𝐩+𝐝$ cannot be less than zero or greater than one, we have the lower and upper bounds for differences as
+$$𝐪=𝐩+𝐝.$$
+
+Then, we define the **continuous uncertainty set** that consists of all deviated distributions around the pivot distribution
+
+$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈𝐃_𝐩\},$$
+
+where $𝐃_𝐩$ is an ambiguity set for the pivot $𝐩.$
+
+
+## Ambiguity Set
+From the properties of discrete probabilities, we have the lower and upper bounds
+
+$$0≤𝐪≤1$$
 
 $$0≤𝐩+𝐝≤1$$
 
 $$-𝐩≤𝐝≤1-𝐩.$$
 
-Furthermore, we want to give **lower bounds** and **upper bounds** as parameters such that
-
-$$𝐝^{-}≤𝐝≤𝐝^{+},$$
-
-where $-𝐩≤𝐝^{-}≤0$ and $0≤𝐝^{+}≤1-𝐩,$ which quarantees that $𝐩$ belongs to the difference set.
+We define the **lower bounds** $𝐝^{-}$ and **upper bounds** $𝐝^{+}$ as parameters such that $𝐝^{-}≤𝐝≤𝐝^{+}$ where $-𝐩≤𝐝^{-}≤0$ and $0≤𝐝^{+}≤1-𝐩.$ These bound also quarantee that $𝐩$ belongs to the ambiguity set $𝐃_𝐩.$
 
 ---
 
-As a consequence of the properties of discrete probabilities, the **sum of the differences is zero**
+As a consequence of the properties of discrete probabilities, the sum of the differences is zero
 
 $$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
 
@@ -34,23 +42,30 @@ with a **radius** parameter $0≤ϵ≤1.$
 
 ---
 
-The **ambiguity set** consists of all possible difference vectors $𝐝$ that yield a valid distribution when added to the distribution $𝐩.$ Formally,
+The **ambiguity set** is the set of all difference vectors that satisfy the given conditions
 
 $$𝐃_𝐩=\{𝐝∈[𝐝^{-},𝐝^{+}]∣ 𝐝⋅𝟏(k)=0,\, \|𝐝\|_l≤2ϵ\}.$$
 
-The ambiguity set is convex, which makes optimization possible. Decreasing $l$ makes the model more pessimistic. Using $l=1$ we receive a **polyhedral ambiguity set**.
+The ambiguity set is convex, which makes optimization possible.
 
 ---
 
-Finally, we define the **continuous uncertainty set** that consists of all distributions within difference $𝐝∈𝐃_𝐩$ from $𝐩$
+Proof of convexity: Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $𝐝=(1-λ)𝐝_1+λ𝐝_2$ with $λ∈[0,1].$
 
-$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈𝐃_𝐩\}.$$
+1) $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$
+2) $𝐝=(1-λ)𝐝_1+λ𝐝_2≤(1-λ)𝐝^{+}+λ𝐝^{+}=𝐝^{+}.$
+3) $𝐝⋅𝟏(k)=(1-λ)𝐝_1⋅𝟏(k)+λ𝐝_2⋅𝟏(k)=0$
+4) $\|𝐝\|_l≤(1-λ)\|𝐝_1\|_l+λ\|𝐝_2\|_l≤2ϵ$ (Triangle inequality)
 
-However, we cannot use a continuous uncertainty set directly for formulating the mathematical model. We must obtain a discrete subset of the continuous uncertainty set to linearize the minimum expected value in the [Best Worst-Case Expected Value](@ref) page.
+---
+
+Decreasing $l$ makes the model more pessimistic. Using $l=1$ we receive a **polyhedral ambiguity set**. By setting $ϵ=1$ we can make the magnitude constraint inactive.
 
 
-## Discretization
-We can define the minimum expected value over the continuous uncertainty set as
+## Discrete Uncertainty Set
+We cannot use a continuous uncertainty set directly for formulating the mathematical model. We must obtain a discrete subset of the continuous uncertainty set to linearize the minimum expected value in the [Best Worst-Case Expected Value](@ref) page.
+
+We can define the minimum expected value over the continuous uncertainty set with utilities $𝐮$ as
 
 $$\min_{𝐪∈\bar{𝐐}_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈𝐃_𝐩} (𝐩+𝐝)⋅𝐮 = 𝐩⋅𝐮 + \min_{𝐝∈𝐃_𝐩} 𝐝⋅𝐮.$$
 
@@ -60,42 +75,35 @@ $$𝐝^{∗}(𝐮)=\argmin_{𝐝∈𝐃_𝐩} 𝐝⋅𝐮.$$
 
 Now, we can obtain a discrete ambiguity set
 
-$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}.$$
+$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}.$$
 
 The discrete set of all possible minimizing distributions
 
 $$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈Δ_𝐩\}.$$
 
 
-## Polyhedral Uncertainty Set
-We have the minimization problem over polyhedral ambiguity set with the objective
+## Discrete Polyhedral Uncertainty Set
+### Cross-Assignment
+The minimization problem over a polyhedral ambiguity set $(l=1)$ is
 
-$$\argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k.$$
+$$\argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k$$
 
-We have constraints for the difference sum, difference intervals and Wasserstein distance. The difference sum constraint is
+$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\}$$
 
-$$d_1+d_2+...+d_k=0.$$
-
-The difference interval constraints are
-
-$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\}.$$
-
-The parameters are **lower bound** $-p_i≤d_i^{-}≤0$ and **upper bound** $0≤d_i^{+}≤1-p_i$ for all $i∈\{1,...,k\}.$
-
-The Wasserstein distance constraint is
+$$d_1+d_2+...+d_k=0$$
 
 $$\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
 
-The **radius** parameter is $0≤ϵ≤1.$
+The parameters are lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the radius parameter is $ϵ∈[0,1]$ and an ordering for the utilities $𝐮=(u_1,...,u_k).$ We will use the ordering
 
+$$u_1≤u_2≤...≤u_k.$$
 
-## Cross-Assignment
-Given an ordering of vector $𝐮$, such as $u_1≤u_2≤...≤u_k$ with corresponding vector of indices $I^{′}=(1,2,...,k),$ we can find the minimizing difference vector $𝐝^{∗}$ over polyhedral ambiguity set using **cross-assignment**.
+We define **cross-assignment** as assignment of differences to **positive differences** $d_1,...,d_j≥0$ and **negative differences** $d_{j+1},...,d_k≤0$ where $j∈\{1,...,k-1\}$ that satisfies the constraints.
 
-The following sections show that we always have difference vector that evaluates to less or equal to zero. After that, we state the rules for finding the minimizing difference vector.
+An **optimal cross-assignment** minimizes the objective.
 
-### Binary cross-assignment
-Let $u_1≤u_2$ and $d_1+d_2=0$ where $d_1≥0$ and $d_2≤0$. Then we have
+### Proofs
+For $k=2$ we have $u_1≤u_2$ and $d_1+d_2=0$ where $d_1≥0$ and $d_2≤0$
 
 $$\begin{aligned}
 u_1⋅d_1 + u_2⋅d_2 &≤ 0 \\
@@ -104,10 +112,9 @@ u_1⋅d_1 &≤ u_2⋅d_1 \\
 u_1 &≤ u_2.
 \end{aligned}$$
 
-### $k$-ary cross-assignment
-Let $u_1≤u_2≤...≤u_k$ and $d_1+d_2+...+d_k=0$.
+---
 
-Then, for all $j∈\{1,...,k-1\}$ such that $d_1,...,d_j≥0$ and $d_{j+1},...,d_k≤0$ we have
+If $k≥2$:
 
 $$\begin{aligned}
 u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1} + ... + u_{j+1}⋅d_{k} \\
@@ -151,9 +158,14 @@ u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
 where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}.$
 
 
-## All Cross-assignments
+### All Cross-assignments
+We denote ordering with vector of indices such as $I^{′}=(1,2,...,k)$ for ordering $u_1≤u_2≤...≤u_k.$
+
 We can construct the set of all minimizing difference vectors by using cross-assignment over all possible orderings of vector $𝐮.$ We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
 
 $$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
 
 There are a finite amount of permutations $|\mathcal{P}(I)|=k!$ which implies $|Δ_𝐩|≤k!.$
+
+### Extrema
+Special case where $ϵ≤-d_i^{-}$ and $ϵ≤d_i^{+}$ for all $i∈\{1,...,k\}.$

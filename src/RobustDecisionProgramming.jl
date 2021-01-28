@@ -7,6 +7,7 @@ export cross_assignment, uncertainty_set
 
 # FIXME: assume increasing order for consistency with documentation
 
+"""Function that computes the optimal cross-assignment."""
 function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
     if (h - l ≤ 0) || (ϵ ≤ 0)
         return d

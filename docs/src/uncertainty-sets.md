@@ -94,16 +94,14 @@ $$d_1+d_2+...+d_k=0$$
 
 $$\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
 
-The parameters are lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the radius parameter is $ϵ∈[0,1]$ and an ordering for the utilities $𝐮=(u_1,...,u_k).$ We will use the ordering
+The parameters are lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the radius parameter is $ϵ∈[0,1]$ and an ordering for the utilities $𝐮=(u_1,...,u_k).$
 
-$$u_1≤u_2≤...≤u_k.$$
+We define **cross-assignment** for ordering $u_1≤u_2≤...≤u_k$ as an assignment of differences to **positive differences** $d_1,...,d_j≥0$ and **negative differences** $d_{j+1},...,d_k≤0$ where $j∈\{1,...,k-1\}$ such that they satisfy the constraints. An **optimal cross-assignment** finds values for the positive and negative differences that minimize the objective.
 
-We define **cross-assignment** as assignment of differences to **positive differences** $d_1,...,d_j≥0$ and **negative differences** $d_{j+1},...,d_k≤0$ where $j∈\{1,...,k-1\}$ that satisfies the constraints.
+### Proof of Negativity
+The objective value of cross-assignment is always negative or zero.
 
-An **optimal cross-assignment** minimizes the objective.
-
-### Proofs
-For $k=2$ we have $u_1≤u_2$ and $d_1+d_2=0$ where $d_1≥0$ and $d_2≤0$
+For a cross-assignment with $k=2$ and $j=1$ we have:
 
 $$\begin{aligned}
 u_1⋅d_1 + u_2⋅d_2 &≤ 0 \\
@@ -112,9 +110,7 @@ u_1⋅d_1 &≤ u_2⋅d_1 \\
 u_1 &≤ u_2.
 \end{aligned}$$
 
----
-
-If $k≥2$:
+For cross-assignment with $k>2$ and for all $j∈\{1,...,k-1\}$ we have:
 
 $$\begin{aligned}
 u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1} + ... + u_{j+1}⋅d_{k} \\
@@ -122,41 +118,33 @@ u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1}
 & ≤ 0.
 \end{aligned}$$
 
-We obtain the last step from binary cross-assignment.
+We obtain the last step from the result for $k=2.$
 
-### Minimizing cross-assignment
-Let $u_1≤u_2$ and $d_1+d_2=d_1^{′}+d_2^{′}.$ Then
-
-$$u_1⋅d_1+u_2⋅d_2≤u_1⋅d_1^{′}+u_2⋅d_2^{′}$$
-
----
-
-Let $d_1,d_2,d_1^{′},d_2^{′},d^{′′}≤0.$ Then
-
-$$\begin{aligned}
-u_1⋅d_1+u_2⋅d_2 &= u_1⋅d_1+u_2⋅(d_2^{′}+d^{′′}) \\
-&= u_1⋅d_1+u_2⋅d^{′′}+u_2⋅d_2^{′} \\
-&≤ u_1⋅d_1+u_1⋅d^{′′}+u_2⋅d_2^{′} \\
-&= u_1⋅(d_1+d^{′′})+u_2⋅d_2^{′} \\
-&= u_1⋅d_1^{′}+u_2⋅d_2^{′},
-\end{aligned}$$
-
-where $d_1=d_1^{′}-d^{′′}$ and $d_2=d_2^{′}+d^{′′}.$
-
----
-
-Let $d_1,d_2,d_1^{′},d_2^{′},d^{′′}≥0.$ Then
+### Proof of Minimum
+Let $u_1≤u_2$ and $d_1+d_2=d_1^{′}+d_2^{′}$ where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}$ with $d^{′′}≥0.$ Then, we have:
 
 $$\begin{aligned}
 u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
 &= u_1⋅d_1^{′}+u_1⋅d^{′′}+u_2⋅d_2 \\
 &≤ u_1⋅d_1^{′}+u_2⋅d^{′′}+u_2⋅d_2 \\
 &= u_1⋅d_1^{′}+u_2⋅(d_2+d^{′′}) \\
-&= u_1⋅d_1^{′}+u_2⋅d_2^{′},
+&= u_1⋅d_1^{′}+u_2⋅d_2^{′}.
 \end{aligned}$$
 
-where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}.$
+It satisfies the constraint
 
+$$|d_1|+|d_2|=|d_1^{′}|+|d_2^{′}|$$
+
+1) If $d_1,d_1^{′}≥0$ and $d_2,d_2^{′}≤0$ or
+2) If $d_1,d_1^{′},d_2,d_2^{′}≥0$ or
+3) If $d_1,d_1^{′},d_2,d_2^{′}≤0.$
+
+### Optimal Cross-Assignment
+Proof of minimum cross-assignment
+
+```@docs
+cross_assignment
+```
 
 ### All Cross-assignments
 We denote ordering with vector of indices such as $I^{′}=(1,2,...,k)$ for ordering $u_1≤u_2≤...≤u_k.$

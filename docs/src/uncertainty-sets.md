@@ -28,7 +28,7 @@ We define the **lower bounds** $𝐝^{-}$ and **upper bounds** $𝐝^{+}$ as par
 
 ---
 
-As a consequence of the properties of discrete probabilities, the sum of the differences is zero
+As a consequence of the properties of discrete probabilities, we obtain the **conservation of probability mass** as
 
 $$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
 
@@ -52,10 +52,10 @@ The ambiguity set is convex, which makes optimization possible.
 
 Proof of convexity: Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $𝐝=(1-λ)𝐝_1+λ𝐝_2$ with $λ∈[0,1].$
 
-1) $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$
-2) $𝐝=(1-λ)𝐝_1+λ𝐝_2≤(1-λ)𝐝^{+}+λ𝐝^{+}=𝐝^{+}.$
-3) $𝐝⋅𝟏(k)=(1-λ)𝐝_1⋅𝟏(k)+λ𝐝_2⋅𝟏(k)=0$
-4) $\|𝐝\|_l≤(1-λ)\|𝐝_1\|_l+λ\|𝐝_2\|_l≤2ϵ$ (Triangle inequality)
+1) Minimum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$
+2) Maximum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≤(1-λ)𝐝^{+}+λ𝐝^{+}=𝐝^{+}.$
+3) Conservation of probability mass: $𝐝⋅𝟏(k)=(1-λ)𝐝_1⋅𝟏(k)+λ𝐝_2⋅𝟏(k)=0$
+4) Limit for magnitude (Triangle inequality): $\|𝐝\|_l≤(1-λ)\|𝐝_1\|_l+λ\|𝐝_2\|_l≤2ϵ$
 
 ---
 
@@ -101,6 +101,8 @@ We define **cross-assignment** for ordering $u_1≤u_2≤...≤u_k$ as an assign
 ### Proof of Negativity
 The objective value of cross-assignment is always negative or zero.
 
+---
+
 For a cross-assignment with $k=2$ and $j=1$ we have:
 
 $$\begin{aligned}
@@ -109,6 +111,8 @@ u_1⋅d_1 &≤ u_2⋅(-d_2) \\
 u_1⋅d_1 &≤ u_2⋅d_1 \\
 u_1 &≤ u_2.
 \end{aligned}$$
+
+---
 
 For cross-assignment with $k>2$ and for all $j∈\{1,...,k-1\}$ we have:
 
@@ -121,6 +125,8 @@ u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1}
 We obtain the last step from the result for $k=2.$
 
 ### Proof of Minimum
+The condition that some cross-assignment is less or equal to another cross-assignment.
+
 Let $u_1≤u_2$ and $d_1+d_2=d_1^{′}+d_2^{′}$ where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}$ with $d^{′′}≥0.$ Then, we have:
 
 $$\begin{aligned}
@@ -133,11 +139,9 @@ u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
 
 It satisfies the constraint
 
-$$|d_1|+|d_2|=|d_1^{′}|+|d_2^{′}|$$
+$$|d_1|+|d_2|=|d_1^{′}+d^{′′}|+|d_2^{′}-d^{′′}|=|d_1^{′}|+|d_2^{′}|$$
 
-1) If $d_1,d_1^{′}≥0$ and $d_2,d_2^{′}≤0$ or
-2) If $d_1,d_1^{′},d_2,d_2^{′}≥0$ or
-3) If $d_1,d_1^{′},d_2,d_2^{′}≤0.$
+If $d_1,d_1^{′}≥0 ∧ d_2,d_2^{′}≤0$ or $d_1,d_1^{′},d_2,d_2^{′}≥0$ or $d_1,d_1^{′},d_2,d_2^{′}≤0.$
 
 ### Optimal Cross-Assignment
 Proof of minimum cross-assignment
@@ -147,13 +151,34 @@ cross_assignment
 ```
 
 ### All Cross-assignments
-We denote ordering with vector of indices such as $I^{′}=(1,2,...,k)$ for ordering $u_1≤u_2≤...≤u_k.$
+The discrete polyhedral uncertainty set is the set of optimal cross-assignments over all utility orderings.
 
-We can construct the set of all minimizing difference vectors by using cross-assignment over all possible orderings of vector $𝐮.$ We can generate all possible ordering of $𝐮$ by generating all permutations of $I.$ Let $\mathcal{P}(I)$ define the set of all permutations of set $I.$
+$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}=\{𝐝^{∗}(𝐮(I^{′}))∣I^{′}∈\mathcal{P}(I)\}.$$
 
-$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣∀𝐮\}=\{𝐝^{∗}(I^{′})∣I^{′}∈\mathcal{P}(I)\}.$$
+We generate all possible utility ordering of by generating all permutations of $I$ denoted as $\mathcal{P}(I),$ which has finite size $|\mathcal{P}(I)|=k!.$ For example, utility ordering $I^{′}=(1,2,...,k)∈\mathcal{P}(I)$ corresponds to ordering $u_1≤u_2≤...≤u_k.$
 
-There are a finite amount of permutations $|\mathcal{P}(I)|=k!$ which implies $|Δ_𝐩|≤k!.$
+---
 
-### Extrema
-Special case where $ϵ≤-d_i^{-}$ and $ϵ≤d_i^{+}$ for all $i∈\{1,...,k\}.$
+We can express an optimal cross-assignment as a partition $(I_{+},i_{+},I_{0},i_{-},I_{-})$ of indices $I^{′}∈\mathcal{P}(I)$ where we have subsets $I_{+},I_{0},I_{-}⊆I^{′},$ elements $i_{+},i_{-}∈I^{′}$ and the values of the optimal cross-assignment are
+
+-  $d_i=d_i^{+}$, $∀i∈I_{+}$
+-  $0≤d_{i_{+}}≤d_{i_{+}}^{+}$
+-  $d_i=0$, $∀i∈I_{0}$
+-  $d_{i_{-}}^{-}≤d_{i_{-}}≤0$
+-  $d_i=d_i^{-}$, $∀i∈I_{-}$
+
+All partitions in the set
+
+$$\{(I_{+}^{′},i_{+},I_{0}^{′},i_{-},I_{-}^{′})∣ I_{+}^{′}∈\mathcal{P}(I_{+}), I_{0}^{′}∈\mathcal{P}(I_{0}), I_{-}^{′}∈\mathcal{P}(I_{-})\}$$
+
+have equal optimal cross assignment.
+
+Explanation: The internal utility order in the subsets does not change the solution.
+
+---
+
+The bound for the size of the uncertainty set is
+
+$$|Δ_𝐩|≤\max_{I_{+},I_{0},I_{-}} \frac{|\mathcal{P}(I)|}{|\mathcal{P}(I_{+})||\mathcal{P}(I_{0})||\mathcal{P}(I_{-})|}≤|\mathcal{P}(I)|.$$
+
+Note that the empty set has one permutation $|\mathcal{P}(∅)|=1.$

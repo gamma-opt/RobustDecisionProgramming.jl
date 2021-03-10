@@ -146,9 +146,6 @@ If $d_1,d_1^{′}≥0 ∧ d_2,d_2^{′}≤0$ or $d_1,d_1^{′},d_2,d_2^{′}≥0
 ### Optimal Cross-Assignment
 Proof of minimum cross-assignment
 
-```@docs
-cross_assignment
-```
 
 ### All Cross-assignments
 The discrete polyhedral uncertainty set is the set of optimal cross-assignments over all utility orderings.

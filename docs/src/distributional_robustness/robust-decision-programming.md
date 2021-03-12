@@ -1,61 +1,78 @@
 # Robust Decision Programming
 ## Introduction
-Decision programming model with **a single robust chance node**.
+We follow the notation used in `DecisionProgramming.jl`'s [documentation](https://gamma-opt.github.io/DecisionProgramming.jl/dev/) for sections *Influence Diagram* and *Decision Model*.
 
-We follow the notation used in [DecisionProgramming.jl documentation](https://gamma-opt.github.io/DecisionProgramming.jl/dev/).
-
-Express the best worst-base expected value and uncertainty sets in the decision programming context.
+We extend the Decision Model to **locally robust** Decision Model, that is, decision model with **one robust chance node**.
 
 
-## Difference
-Let $i∈C$ be a **robust chance node**. The probability for state $s_i$ with information path $s_{I(i)}$ is denoted as
+## Optimal Discrete Polyhedral Uncertainty Set
+We can extend the [Probabilities](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/influence-diagram/#Probabilities) from `DecisionProgramming.jl` to form an optimal discrete polyhedral uncertainty set.
 
-$$ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})$$
-
-and difference is denote as
-
-$$𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)}).$$
-
-They correspond to values $p_i$ and $d_i.$ Then, we obtain the probability vector as
+Let $i∈C$ be a **robust chance node**. The probability for state $s_i∈S_i$ with information path $s_{I(i)}∈𝐒_{I(i)}$ is denoted as $ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})$ and difference is denote as $𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)}).$ Then, we obtain the probability vector as
 
 $$𝐩(s_{I(i)})=(ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i)$$
 
-and difference vector as
+Then, we can compute the optimal discrete ambiguity set using cross-assignment on the probability vector $Δ_{𝐩(s_{I(i)})}.$ We denote the elements as $𝐝∈Δ_{𝐩(s_{I(i)})}$ where
 
-$$𝐝(s_{I(i)})=(𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i).$$
+$$𝐝=(𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i).$$
 
-They correspond to vectors $𝐩$ and $𝐝.$ We can use probability vector $𝐩(s_{I(i)})$ to form the ambiguity set $Δ_{𝐩(s_{I(i)})}.$
-
-
-## Path Probability
-Upper bound of path probability with uncertainty is
-
-$$p(𝐬,i,d) = (ℙ(X_i=𝐬_i∣X_{I(i)}=𝐬_{I(i)})+d) ⋅ ∏_{j∈C∖\{i\}} ℙ(X_j=𝐬_j∣X_{I(j)}=𝐬_{I(j)})$$
-
-**Path probability variables** $π(𝐬,i,d)$ are equivalent to the path probability
-
-$$ℙ(X=𝐬,i,d∣Z)=p(𝐬,i,d)⋅q(𝐬∣Z).$$
-
-See [Path Probability Variables](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/decision-model/#Path-Probability-Variables) section.
+We ignore all inactive chance states when forming the ambiguity set.
 
 
-## Maximin Expected Value
-We maximize the minimum expected value over all possible combinations of difference vectors
+## Best Worst-Case Expected Value
+### Path Probability with Uncertainty
+We extend the [Path Probability](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/influence-diagram/#Path-Probability) to include uncertainty by introducing the difference $d$ to the probability of robust chance node $i.$
 
-$$\underset{Z∈ℤ}{\text{maximize}} \min_{𝐃∈Δ^{×}} ∑_{s_{I(i)}∈S_{I(i)}} 𝔼^{′}(Z,i,𝐃(s_{I(i)}))$$
+The **path probability with uncertainty** becomes
 
-where the product uncertainty set is 
+$$ℙ(X=𝐬,i,d∣Z)=p(𝐬,i,d)⋅q(𝐬∣Z)$$
 
-$$Δ^{×}=∏_{s_{I(i)}∈S_{I(i)}}Δ_{𝐩(s_{I(i)})}$$
+where **upper bound of path probability with uncertainty** is
 
-and the partial expected value is
+$$p(𝐬,i,d) = (ℙ(X_i=𝐬_i∣X_{I(i)}=𝐬_{I(i)})+d) ⋅ ∏_{j∈C∖\{i\}} ℙ(X_j=𝐬_j∣X_{I(j)}=𝐬_{I(j)}).$$
+
+### Partial Expected Value
+For all $s_{I(i)}∈𝐒_{I(i)}$
 
 $$𝔼^{′}(Z,i,𝐝)= ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} ℙ(X=𝐬,i,𝐝_{𝐬_i}∣Z)⋅\mathcal{U}(𝐬)$$
 
 ---
 
+Distribution
+
+$$q=ℙ(X_i=𝐬_i∣X_{I(i)}=𝐬_{I(i)})+d$$
+
+Utility
+
+$$u=∏_{j∈C∖\{i\}} ℙ(X_j=𝐬_j∣X_{I(j)}=𝐬_{I(j)})⋅q(𝐬∣Z)⋅\mathcal{U}(𝐬)$$
+
+### Maximin Expected Value
+We maximize the minimum expected value over all possible combinations of difference vectors
+
+$$\underset{Z∈ℤ}{\text{maximize}} \min_{𝐃∈Δ^{×}} ∑_{s_{I(i)}∈𝐒_{I(i)}} 𝔼^{′}(Z,i,𝐃(s_{I(i)}))$$
+
+where the product uncertainty set is 
+
+$$Δ^{×}=∏_{s_{I(i)}∈𝐒_{I(i)}}Δ_{𝐩(s_{I(i)})}.$$
+
+---
+
 The linearized maximin is
 
-$$\underset{Z∈ℤ}{\text{maximize}} ∑_{s_{I(i)}∈S_{I(i)}} x_{s_{I(i)}}$$
+$$\underset{Z∈ℤ}{\text{maximize}} ∑_{s_{I(i)}∈𝐒_{I(i)}} x_{s_{I(i)}}$$
 
-$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} π(𝐬,i,𝐝_{𝐬_i})⋅\mathcal{U}(𝐬),\quad ∀𝐝∈Δ_{𝐩(s_{I(i)})},\, s_{I(i)}∈S_{I(i)}$$
+$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} ℙ(X=𝐬,i,𝐝_{𝐬_i}∣Z)⋅\mathcal{U}(𝐬),\quad ∀𝐝∈Δ_{𝐩(s_{I(i)})},\, s_{I(i)}∈𝐒_{I(i)}$$
+
+
+### Path Probability Variables with Uncertainty
+**Path probability variables with uncertainty** $π(𝐬,i,d)$ are equivalent to the path probability $ℙ(X=𝐬,i,d∣Z)$ similar to [Path Probability Variables](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/decision-model/#Path-Probability-Variables) section.
+
+Use upper bound of path probability with uncertainty
+
+For all $s_{I(i)}∈𝐒_{I(i)}$
+
+$$0≤π(𝐬,i,d)≤p(𝐬,i,d),\quad ∀𝐬∈𝐒, 𝐬_{I(i)}=s_{I(i)}$$
+
+$$π(𝐬,i,d)≤z(𝐬_j∣𝐬_{I(j)}),\quad ∀j∈D,𝐬∈𝐒, 𝐬_{I(i)}=s_{I(i)}$$
+
+$$π(𝐬,i,d)≥p(𝐬,i,d)+∑_{j∈D}z(𝐬_j∣𝐬_{I(j)})-|D|,\quad ∀𝐬∈𝐒, 𝐬_{I(i)}=s_{I(i)}$$

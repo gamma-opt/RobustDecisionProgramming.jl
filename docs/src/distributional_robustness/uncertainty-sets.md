@@ -146,35 +146,29 @@ If $d_1,d_1^{′}≥0 ∧ d_2,d_2^{′}≤0$ or $d_1,d_1^{′},d_2,d_2^{′}≥0
 ### Optimal Cross-Assignment
 Proof of minimum cross-assignment
 
-
-### All Cross-assignments
+### All Optimal Cross-assignments
 The discrete polyhedral uncertainty set is the set of optimal cross-assignments over all utility orderings.
 
 $$Δ_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}=\{𝐝^{∗}(𝐮(I^{′}))∣I^{′}∈\mathcal{P}(I)\}.$$
 
 We generate all possible utility ordering of by generating all permutations of $I$ denoted as $\mathcal{P}(I),$ which has finite size $|\mathcal{P}(I)|=k!.$ For example, utility ordering $I^{′}=(1,2,...,k)∈\mathcal{P}(I)$ corresponds to ordering $u_1≤u_2≤...≤u_k.$
 
----
-
+### Number of Optimal Cross-assignments
 We can express an optimal cross-assignment as a partition $(I_{+},i_{+},I_{0},i_{-},I_{-})$ of indices $I^{′}∈\mathcal{P}(I)$ where we have subsets $I_{+},I_{0},I_{-}⊆I^{′},$ elements $i_{+},i_{-}∈I^{′}$ and the values of the optimal cross-assignment are
 
--  $d_i=d_i^{+}$, $∀i∈I_{+}$
--  $0≤d_{i_{+}}≤d_{i_{+}}^{+}$
--  $d_i=0$, $∀i∈I_{0}$
--  $d_{i_{-}}^{-}≤d_{i_{-}}≤0$
--  $d_i=d_i^{-}$, $∀i∈I_{-}$
+$$\begin{aligned}
+& d_i=d_i^{+},\quad ∀i∈I_{+} \\
+& 0≤d_{i_{+}}≤d_{i_{+}}^{+} \\
+& d_i=0,\quad ∀i∈I_{0} \\
+& d_{i_{-}}^{-}≤d_{i_{-}}≤0 \\
+& d_i=d_i^{-},\quad ∀i∈I_{-} \\
+\end{aligned}$$
 
-All partitions in the set
+Since the internal utility order in the subsets does not change the solution, all partitions in the set
 
 $$\{(I_{+}^{′},i_{+},I_{0}^{′},i_{-},I_{-}^{′})∣ I_{+}^{′}∈\mathcal{P}(I_{+}), I_{0}^{′}∈\mathcal{P}(I_{0}), I_{-}^{′}∈\mathcal{P}(I_{-})\}$$
 
-have equal optimal cross assignment.
-
-Explanation: The internal utility order in the subsets does not change the solution.
-
----
-
-The bound for the size of the uncertainty set is
+have the same optimal cross assignment. Therefore, the bound for the size of the uncertainty set is
 
 $$|Δ_𝐩|≤\max_{I_{+},I_{0},I_{-}} \frac{|\mathcal{P}(I)|}{|\mathcal{P}(I_{+})||\mathcal{P}(I_{0})||\mathcal{P}(I_{-})|}≤|\mathcal{P}(I)|.$$
 

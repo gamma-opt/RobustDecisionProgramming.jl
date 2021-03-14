@@ -7,7 +7,6 @@ makedocs(
     modules = [RobustDecisionProgramming],
     pages = [
         "Home" => "index.md",
-        "robust-optimization.md",
         "Distributional Robustness" => Any[
             "distributional_robustness/best-worst-case-expected-value.md",
             "distributional_robustness/uncertainty-sets.md",

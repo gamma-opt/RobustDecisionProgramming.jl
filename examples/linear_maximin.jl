@@ -21,19 +21,21 @@ U⁺ = PositivePathUtility(S, U)
 
 model = Model()
 z = DecisionVariables(model, S, D)
-EV_min = min_expected_value(S, C, X, z, 1, 0.1)
+k = 1
+ϵ = 0.1
+EV_min = min_expected_value(S, C, X, z, k, ϵ)
 @objective(model, Max, EV_min)
 
-# using Gurobi
-# optimizer = optimizer_with_attributes(
-#     () -> Gurobi.Optimizer(Gurobi.Env()),
-#     "IntFeasTol" => 1e-9,
-# )
-# set_optimizer(model, optimizer)
-# optimize!(model)
+using SCIP
+optimizer = optimizer_with_attributes(
+    () -> SCIP.Optimizer()
+)
 
-# @info("Extracting results.")
-# Z = DecisionStrategy(z)
+set_optimizer(model, optimizer)
+optimize!(model)
 
-# @info("Printing decision strategy:")
-# print_decision_strategy(S, Z)
+@info("Extracting results.")
+Z = DecisionStrategy(z)
+
+@info("Printing decision strategy:")
+print_decision_strategy(S, Z)

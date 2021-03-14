@@ -11,7 +11,7 @@ makedocs(
         "Distributional Robustness" => Any[
             "distributional_robustness/best-worst-case-expected-value.md",
             "distributional_robustness/uncertainty-sets.md",
-            "distributional_robustness/robust-decision-programming.md"
+            "distributional_robustness/robust-decision-model.md"
             ],
         "api.md"
     ]

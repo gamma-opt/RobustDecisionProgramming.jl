@@ -50,7 +50,7 @@ function cross_assignment(p::Vector{Float64}, ϵ::Float64)
 end
 
 """Polyhedral uncertainty set."""
-function uncertainty_set(p::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
+function uncertainty_set(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
     @assert all(p .≥ 0)
     @assert isapprox(sum(p), 1)
     @assert 0 ≤ ϵ ≤ 1
@@ -61,9 +61,19 @@ function uncertainty_set(p::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
         Q = Set{Vector{Float64}}()
         for indices in permutations(i)
             q = copy(p)
-            q[indices] += cross_assignment(p[indices], ϵ)
+            q[indices] += cross_assignment(p[indices], d⁻[indices], d⁺[indices], ϵ)
             push!(Q, q)
         end
         return Q
     end
+end
+
+"""Polyhedral uncertainty set."""
+function uncertainty_set(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})::Set{Vector{Float64}}
+    uncertainty_set(p, d⁻, d⁺, 1.0)
+end
+
+"""Polyhedral uncertainty set."""
+function uncertainty_set(p::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
+    uncertainty_set(p, -p, 1.0.-p, ϵ)
 end

@@ -40,7 +40,9 @@ optimize!(model)
 model = Model()
 z = DecisionVariables(model, S, D)
 μ = value(EV)
-regret = μ - min_expected_value(S, C, X, z, 1, 0.1)
+k = 1
+ϵ = 0.1
+regret = μ - min_expected_value(model, S, C, X, z, k, ϵ)
 @objective(model, Min, regret)
 
 optimizer = optimizer_with_attributes(

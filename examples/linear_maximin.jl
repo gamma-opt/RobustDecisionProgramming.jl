@@ -23,7 +23,7 @@ model = Model()
 z = DecisionVariables(model, S, D)
 k = 1
 ϵ = 0.1
-EV_min = min_expected_value(S, C, X, z, k, ϵ)
+EV_min = min_expected_value(model, S, C, X, z, k, ϵ)
 @objective(model, Max, EV_min)
 
 using SCIP

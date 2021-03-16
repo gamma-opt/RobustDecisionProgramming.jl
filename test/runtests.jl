@@ -8,7 +8,6 @@ function test_cross_assignment()
     p = [0.4, 0.6]
     d⁻ = [-0.2, -0.2]
     d⁺ = [0.2, 0.2]
-
     @test isapprox(cross_assignment(Deviation(p, 0.1)), [-0.1, 0.1])
     @test isapprox(cross_assignment(Deviation(p, d⁻, d⁺)), [-0.2, 0.2])
     @test isapprox(cross_assignment(Deviation(p, d⁻, d⁺, 0.1)), [-0.1, 0.1])
@@ -16,7 +15,6 @@ function test_cross_assignment()
     p = [0.1, 0.7, 0.2]
     d⁻ = [-0.1, -0.1, -0.2]
     d⁺ = [0.2, 0.2, 0.05]
-
     @test isapprox(cross_assignment(Deviation(p, 0.15)), [-0.1, -0.05, 0.15])
     @test isapprox(cross_assignment(Deviation(p, d⁻, d⁺)), [-0.1, 0.05, 0.05])
     @test isapprox(cross_assignment(Deviation(p, d⁻, d⁺, 0.08)), [-0.08, 0.03, 0.05])
@@ -32,10 +30,9 @@ function test_polyhedral_uncertainty_set()
     p = [0.4, 0.6]
     d⁻ = [-0.2, -0.2]
     d⁺ = [0.2, 0.2]
-
-    PolyhedralUncertaintySet(Deviation(p, 0.1))
-    PolyhedralUncertaintySet(Deviation(p, d⁻, d⁺))
-    PolyhedralUncertaintySet(Deviation(p, d⁻, d⁺, 0.1))
+    polyhedral_uncertainty_set(Deviation(p, 0.1))
+    polyhedral_uncertainty_set(Deviation(p, d⁻, d⁺))
+    polyhedral_uncertainty_set(Deviation(p, d⁻, d⁺, 0.1))
     @test true
 end
 

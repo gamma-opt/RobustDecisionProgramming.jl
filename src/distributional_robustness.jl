@@ -73,6 +73,7 @@ function polyhedral_uncertainty(mask::Vector{Int}, dev::Deviation)
     return q
 end
 
+"""Polyhedral uncertainty set."""
 function polyhedral_uncertainty_set(dev::Deviation)::Set{Vector{Float64}}
     p, ϵ = dev.p, dev.ϵ
     if iszero(ϵ)
@@ -81,15 +82,4 @@ function polyhedral_uncertainty_set(dev::Deviation)::Set{Vector{Float64}}
         i = [i for i in LinearIndices(p) if !iszero(p[i])]
         return Set(polyhedral_uncertainty(mask, dev) for mask in permutations(i))
     end
-end
-
-"""Polyhedral uncertainty set."""
-struct PolyhedralUncertaintySet
-    dev::Deviation
-    set::Set{Vector{Float64}}
-end
-
-function PolyhedralUncertaintySet(dev::Deviation)
-    set = polyhedral_uncertainty_set(dev)
-    PolyhedralUncertaintySet(dev, set)
 end

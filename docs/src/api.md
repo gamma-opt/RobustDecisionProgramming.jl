@@ -2,5 +2,5 @@
 ```@docs
 Deviation
 cross_assignment
-PolyhedralUncertaintySet
+polyhedral_uncertainty_set
 ```

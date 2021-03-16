@@ -1,5 +1,6 @@
 # API Reference
 ```@docs
+Deviation
 cross_assignment
-uncertainty_set
+PolyhedralUncertaintySet
 ```

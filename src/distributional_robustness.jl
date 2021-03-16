@@ -1,6 +1,36 @@
 using JuMP
 using Combinatorics: permutations
 
+"""Deviation"""
+struct Deviation
+    n::Int
+    p::Vector{Float64}
+    d⁻::Vector{Float64}
+    d⁺::Vector{Float64}
+    ϵ::Float64
+    function Deviation(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+        n = length(p)
+        n ≥ 1 || throw(DomainError(""))
+        all(p .≥ 0) || throw(DomainError(""))
+        isapprox(sum(p), 1) || throw(DomainError(""))
+        length(p) == n || throw(DomainError(""))
+        length(d⁻) == n || throw(DomainError(""))
+        length(d⁺) == n || throw(DomainError(""))
+        all(d⁻ .≥ -p) || throw(DomainError(""))
+        all(d⁺ .≤ 1.0.-p) || throw(DomainError(""))
+        0 ≤ ϵ ≤ 1 || throw(DomainError(""))
+        new(n, p, d⁻, d⁺, ϵ)
+    end
+end
+
+function Deviation(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})
+    Deviation(p, d⁻, d⁺, 1.0)
+end
+
+function Deviation(p::Vector{Float64}, ϵ::Float64)
+    Deviation(p, -p, 1.0.-p, ϵ)
+end
+
 # FIXME: assume increasing order for consistency with documentation
 
 """Function that computes the optimal cross-assignment."""
@@ -28,52 +58,38 @@ function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float
     end
 end
 
-function cross_assignment(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
-    k = length(p)
-    @assert k ≥ 1
-    @assert length(p) == k
-    @assert length(d⁻) == k
-    @assert length(d⁺) == k
-    @assert all(d⁻ .≥ -p)
-    @assert all(d⁺ .≤ 1.0.-p)
-    @assert 0 ≤ ϵ ≤ 1
-    d = zeros(k)
-    cross_assignment(1, k, d, d⁻, d⁺, ϵ)
+function cross_assignment(n, d⁻, d⁺, ϵ)
+    d = zeros(n)
+    cross_assignment(1, n, d, d⁻, d⁺, ϵ)
 end
 
-function cross_assignment(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})
-    cross_assignment(p, d⁻, d⁺, 1.0)
+function cross_assignment(dev::Deviation)
+    cross_assignment(dev.n, dev.d⁻, dev.d⁺, dev.ϵ)
 end
 
-function cross_assignment(p::Vector{Float64}, ϵ::Float64)
-    cross_assignment(p, -p, 1.0.-p, ϵ)
+function polyhedral_uncertainty(mask::Vector{Int}, dev::Deviation)
+    q = copy(dev.p)
+    q[mask] += cross_assignment(length(mask), dev.d⁻[mask], dev.d⁺[mask], dev.ϵ)
+    return q
 end
 
-"""Polyhedral uncertainty set."""
-function uncertainty_set(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
-    @assert all(p .≥ 0)
-    @assert isapprox(sum(p), 1)
-    @assert 0 ≤ ϵ ≤ 1
+function polyhedral_uncertainty_set(dev::Deviation)::Set{Vector{Float64}}
+    p, ϵ = dev.p, dev.ϵ
     if iszero(ϵ)
         return [p]
     else
         i = [i for i in LinearIndices(p) if !iszero(p[i])]
-        Q = Set{Vector{Float64}}()
-        for indices in permutations(i)
-            q = copy(p)
-            q[indices] += cross_assignment(p[indices], d⁻[indices], d⁺[indices], ϵ)
-            push!(Q, q)
-        end
-        return Q
+        return Set(polyhedral_uncertainty(mask, dev) for mask in permutations(i))
     end
 end
 
 """Polyhedral uncertainty set."""
-function uncertainty_set(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})::Set{Vector{Float64}}
-    uncertainty_set(p, d⁻, d⁺, 1.0)
+struct PolyhedralUncertaintySet
+    dev::Deviation
+    set::Set{Vector{Float64}}
 end
 
-"""Polyhedral uncertainty set."""
-function uncertainty_set(p::Vector{Float64}, ϵ::Float64)::Set{Vector{Float64}}
-    uncertainty_set(p, -p, 1.0.-p, ϵ)
+function PolyhedralUncertaintySet(dev::Deviation)
+    set = polyhedral_uncertainty_set(dev)
+    PolyhedralUncertaintySet(dev, set)
 end

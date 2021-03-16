@@ -20,7 +20,8 @@ function min_expected_value(model::Model, S::States, C::Vector{ChanceNode}, X::V
         # Minimum partial expected value
         x = @variable(model)
         # For all probabilities in the uncertainty set around `p`
-        for q in uncertainty_set(p, ϵ)
+        d = Deviation(p, ϵ)
+        for q in polyhedral_uncertainty_set(d)
             X′ = copy(X)
             X′[k].data[s_I..., :] = q
             P = DefaultPathProbability(C, X′)

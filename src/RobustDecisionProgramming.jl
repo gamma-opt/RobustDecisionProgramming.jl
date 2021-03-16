@@ -1,6 +1,7 @@
 module RobustDecisionProgramming
 
 include("distributional_robustness.jl")
-export cross_assignment, uncertainty_set
+export Deviation, PolyhedralUncertaintySet
+export cross_assignment, polyhedral_uncertainty_set
 
 end # module

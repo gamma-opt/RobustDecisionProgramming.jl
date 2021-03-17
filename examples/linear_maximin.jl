@@ -34,19 +34,31 @@ using SCIP
 optimizer = optimizer_with_attributes(
     () -> SCIP.Optimizer()
 )
-
 set_optimizer(model, optimizer)
 optimize!(model)
-
-@info("Extracting results.")
-Z = DecisionStrategy(z)
-
-@info("Printing decision strategy:")
-print_decision_strategy(S, Z)
 
 @info("Construct minimizing path probability")
 X′ = min_probabilities(mpevs, X, k)
 P = DefaultPathProbability(C, X′)
+
+@info("Reoptimize model with minimum path probability")
+model2 = Model()
+z2 = DecisionVariables(model2, S, D)
+π_s = PathProbabilityVariables(model2, z2, S, P; hard_lower_bound=false)
+ev = expected_value(model2, π_s, U⁺)
+@objective(model2, Max, ev)
+
+optimizer2 = optimizer_with_attributes(
+    () -> SCIP.Optimizer()
+)
+set_optimizer(model2, optimizer2)
+optimize!(model2)
+
+@info("Extracting results.")
+Z = DecisionStrategy(z2)
+
+@info("Printing decision strategy:")
+print_decision_strategy(S, Z)
 
 @info("Computing utility distribution.")
 udist = UtilityDistribution(S, P, U, Z)

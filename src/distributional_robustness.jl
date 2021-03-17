@@ -1,15 +1,22 @@
 using JuMP
 using Combinatorics: permutations
 
-"""Deviation"""
+"""Stores and validates the values of a deviation for discrete probabilities `p`.
+
+# Arguments
+- `n`: Length of discrete probabilities
+- `p`: Vector of discrete probabilities
+- `d⁻`: Vector of lower bounds
+- `d⁺`: Vector of uppper bounds
+- `ϵ`: Radius of uncertainty
+"""
 struct Deviation
     n::Int
     p::Vector{Float64}
     d⁻::Vector{Float64}
     d⁺::Vector{Float64}
     ϵ::Float64
-    function Deviation(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
-        n = length(p)
+    function Deviation(n::Int, p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
         n ≥ 1 || throw(DomainError(""))
         all(p .≥ 0) || throw(DomainError(""))
         isapprox(sum(p), 1) || throw(DomainError(""))
@@ -23,6 +30,11 @@ struct Deviation
     end
 end
 
+function Deviation(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+    n = length(p)
+    Deviation(n, p, d⁻, d⁺, ϵ)
+end
+
 function Deviation(p::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64})
     Deviation(p, d⁻, d⁺, 1.0)
 end
@@ -30,8 +42,6 @@ end
 function Deviation(p::Vector{Float64}, ϵ::Float64)
     Deviation(p, -p, 1.0.-p, ϵ)
 end
-
-# FIXME: assume increasing order for consistency with documentation
 
 """Function that computes the optimal cross-assignment."""
 function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
@@ -74,12 +84,13 @@ function polyhedral_uncertainty(mask::Vector{Int}, dev::Deviation)
 end
 
 """Polyhedral uncertainty set."""
-function polyhedral_uncertainty_set(dev::Deviation)::Set{Vector{Float64}}
+function polyhedral_uncertainty_set(dev::Deviation)::Array{Vector{Float64}}
     p, ϵ = dev.p, dev.ϵ
     if iszero(ϵ)
         return [p]
     else
         i = [i for i in LinearIndices(p) if !iszero(p[i])]
-        return Set(polyhedral_uncertainty(mask, dev) for mask in permutations(i))
+        s = Set(polyhedral_uncertainty(mask, dev) for mask in permutations(i))
+        return collect(s)
     end
 end

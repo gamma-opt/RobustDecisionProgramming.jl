@@ -19,6 +19,12 @@ sort!.((C, D, V, X, Y), by = x -> x.j)
 U = DefaultPathUtility(V, Y)
 U⁺ = PositivePathUtility(S, U)
 
+k = 1
+ϵ = 0.1
+deviations = [
+    s_I => Deviation(X[k].data[s_I..., :], ϵ) for s_I in paths(S[C[k].I_j])
+]
+
 # --- Maximize expected value ---
 
 model = Model()
@@ -40,9 +46,7 @@ optimize!(model)
 model = Model()
 z = DecisionVariables(model, S, D)
 μ = value(EV)
-k = 1
-ϵ = 0.1
-regret = μ - min_expected_value(model, S, C, X, z, k, ϵ)
+regret = μ - min_expected_value(deviations, model, S, C, X, U⁺, z, k)
 @objective(model, Min, regret)
 
 optimizer = optimizer_with_attributes(

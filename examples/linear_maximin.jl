@@ -19,12 +19,16 @@ sort!.((C, D, V, X, Y), by = x -> x.j)
 U = DefaultPathUtility(V, Y)
 U⁺ = PositivePathUtility(S, U)
 
-model = Model()
-z = DecisionVariables(model, S, D)
 k = 1
 ϵ = 0.1
-EV_min = min_expected_value(model, S, C, X, z, k, ϵ)
-@objective(model, Max, EV_min)
+deviations = [
+    s_I => Deviation(X[k].data[s_I..., :], ϵ) for s_I in paths(S[C[k].I_j])
+]
+
+model = Model()
+z = DecisionVariables(model, S, D)
+(min_ev, mpevs) = min_expected_value(deviations, model, S, C, X, U⁺, z, k)
+@objective(model, Max, min_ev)
 
 using SCIP
 optimizer = optimizer_with_attributes(
@@ -39,3 +43,16 @@ Z = DecisionStrategy(z)
 
 @info("Printing decision strategy:")
 print_decision_strategy(S, Z)
+
+@info("Construct minimizing path probability")
+X′ = min_probabilities(mpevs, X, k)
+P = DefaultPathProbability(C, X′)
+
+@info("Computing utility distribution.")
+udist = UtilityDistribution(S, P, U, Z)
+
+@info("Printing utility distribution.")
+print_utility_distribution(udist)
+
+@info("Printing statistics")
+print_statistics(udist)

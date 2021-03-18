@@ -1,9 +1,9 @@
-# Best Worst-Case Expected Value
+# [Best Worst-Case Expected Value](@id best-worst-case-expected-value)
 ## Introduction
 We explore an approach to robust optimization referred to as **distributionally robust optimization**. It finds the best worst-case expected value when there is uncertainty in the probability distribution. In this case, best means maximizing over decision variables, and worst-case expected value means minimum expected value over an uncertainty set that accounts for the distribution's uncertainty. In this work, we only consider discrete probability distributions.
 
 
-## Expected Value
+## [Expected Value](@id expected-value)
 We denote a finite set the **states** for probabilities and utilities as
 
 $$I=\{1,2,...,k\},\quad k∈ℕ.$$
@@ -22,7 +22,7 @@ $$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
 
 
 ## Best Worst-Case over Uncertainty Set
-The uncertainty set encapsulates the uncertainty in the probabilities. Given probabilities $𝐩,$ we define the **uncertainty set** $𝐐_𝐩$ as a finite set of discrete probabilities near $𝐩.$ We will explain how to form a finite uncertainty sets on [Uncertainty Sets](@ref) page.
+The uncertainty set encapsulates the uncertainty in the probabilities. Given probabilities $𝐩,$ we define the **uncertainty set** $𝐐_𝐩$ as a finite set of discrete probabilities near $𝐩.$ We will explain how to form a finite uncertainty sets on [Uncertainty Sets](@ref uncertainty-sets) page.
 
 ### Maximin Expected Value
 We define the problem as maximizing the minimum expected value over decision variables $Z$
@@ -53,7 +53,7 @@ $$\underset{z∈Z}{\operatorname{minimize}}\, (μ^{∗}-x)$$
 $$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐_𝐩$$
 
 
-## Best Worst-Case over Product Uncertainty Set
+## [Best Worst-Case over Product Uncertainty Set](@id best-worst-case-over-product-uncertainty-set)
 Let $𝐏=\{𝐩_1,...,𝐩_m\},\, m∈ℕ$ be a finite set of probability vectors. We define the **product uncertainty set** as
 
 $$𝐐_𝐏^{×}=∏_{l=1}^m 𝐐_{𝐩_l}.$$

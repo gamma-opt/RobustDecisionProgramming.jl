@@ -29,10 +29,12 @@ function min_expected_value(devs, model::Model, S::States, C::Vector{ChanceNode}
     return (min_ev, mpevs)
 end
 
+"""Find distribution from uncertainty set that minimizes the partial expected value."""
 function min_distribution(pevs, Q)
     return Q[argmin([value(pev) for pev in pevs])]
 end
 
+"""Consruct the probabilities that minimize the expected value."""
 function min_probabilities(mpevs, X, k)
     X′ = copy(X)
     for (_, pevs, Q, s_I) in mpevs

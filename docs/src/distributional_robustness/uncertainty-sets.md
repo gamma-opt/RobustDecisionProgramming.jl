@@ -1,4 +1,4 @@
-# Uncertainty Sets
+# [Uncertainty Sets](@id uncertainty-sets)
 ## Continuous Uncertainty Set
 Given two finite sets of discrete probabilities, the **pivot** $𝐩$ and **deviated** $𝐪$ over states $I.$ We define the **difference** between the distributions as
 

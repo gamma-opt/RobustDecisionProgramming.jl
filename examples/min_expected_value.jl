@@ -23,7 +23,7 @@ function minimum_partial_expected_value(dev, I_j, s_I, model, S, C, X, U⁺, z, 
 end
 
 """Minimum expected value over discrete polyhedral uncertainty set."""
-function min_expected_value(devs, model::Model, S::States, C::Vector{ChanceNode}, X::Vector{Probabilities{N}}, U⁺, z::DecisionVariables, k::Int; hard_lower_bound::Bool=false) where N
+function min_expected_value(devs, model::Model, S::States, C::Vector{ChanceNode}, X, U⁺, z::DecisionVariables, k::Int; hard_lower_bound::Bool=false)
     mpevs = [minimum_partial_expected_value(dev, C[k].I_j, s_I, model, S, C, X, U⁺, z, k, hard_lower_bound) for (s_I, dev) in devs]
     min_ev = sum(mpev.x for mpev in mpevs)
     return (min_ev, mpevs)

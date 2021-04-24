@@ -36,7 +36,7 @@ function test_polyhedral_uncertainty_set()
     )
     @test isapprox(
         polyhedral_uncertainty_set(Deviation(p, d⁻, d⁺)),
-        [[0.2, 0.8], [0.6, 0.4]]
+        [[0.6, 0.4], [0.2, 0.8]]
     )
     @test isapprox(
         polyhedral_uncertainty_set(Deviation(p, d⁻, d⁺, 0.1)),

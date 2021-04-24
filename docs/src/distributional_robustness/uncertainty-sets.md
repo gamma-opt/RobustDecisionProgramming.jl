@@ -63,7 +63,7 @@ Decreasing $l$ makes the model more pessimistic. Using $l=1$ we receive a **poly
 
 
 ## Discrete Uncertainty Set
-We cannot use a continuous uncertainty set directly for formulating the mathematical model. We must obtain a discrete subset of the continuous uncertainty set to linearize the minimum expected value in the [Best Worst-Case Expected Value](@ref) page.
+We cannot use a continuous uncertainty set directly for formulating the mathematical model. We must obtain a discrete subset of the continuous uncertainty set to linearize the minimum expected value in the [Best Worst-Case Expected Value](@ref best-worst-case-expected-value) page.
 
 We can define the minimum expected value over the continuous uncertainty set with utilities $𝐮$ as
 

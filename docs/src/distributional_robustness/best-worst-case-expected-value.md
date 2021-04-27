@@ -1,5 +1,5 @@
 # [Best Worst-Case Expected Value](@id best-worst-case-expected-value)
-## Introduction
+## Overview
 We explore an approach to robust optimization referred to as **distributionally robust optimization**. It finds the best worst-case expected value when there is uncertainty in the probability distribution. In this case, best means maximizing over decision variables, and worst-case expected value means minimum expected value over an uncertainty set that accounts for the distribution's uncertainty. In this work, we only consider discrete probability distributions.
 
 
@@ -16,13 +16,13 @@ such that all elements are greater or equal to zero $𝐩≥0$ and the sum of al
 
 $$𝐮=(u_1,u_2,...,u_k)∈ℝ^k.$$
 
-Finally, we define **expected value** as a function of probabilities and utilities
+Now, we can define **expected value** as the dot product of probabilities and utilities
 
 $$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
 
 
 ## Best Worst-Case over Uncertainty Set
-The uncertainty set encapsulates the uncertainty in the probabilities. Given probabilities $𝐩,$ we define the **uncertainty set** $𝐐_𝐩$ as a finite set of discrete probabilities near $𝐩.$ We will explain how to form a finite uncertainty sets on [Uncertainty Sets](@ref uncertainty-sets) page.
+The uncertainty set encapsulates the uncertainty in the probabilities. Given probabilities $𝐩,$ we define the **uncertainty set** $𝐐_𝐩$ as a finite set of discrete probabilities near $𝐩.$ We will explain how to form a finite uncertainty sets on [Uncertainty Sets](@ref uncertainty-set) page.
 
 ### Maximin Expected Value
 We define the problem as maximizing the minimum expected value over decision variables $Z$

@@ -1,10 +1,10 @@
 # [Distributionally Robust Decision Model](@id distributionally-robust-decision-model)
 ## Overview
-The *Robust Decision Model* section extends the *Decision Model* from *Decision Programming* into a robust decision model. A robust decision model refers to a decision model with the [Best Worst-Case Expected Value](@ref best-worst-case-expected-value) formulation over a polyhedral ambiguity set spanned by robust chance nodes. We also define a locally robust decision model to have only one robust chance node. A globally robust decision model may have multiple robust chance nodes. We cover only the formulation of the locally robust decision model. We follow the notation from Decision Programming's [documentation](https://gamma-opt.github.io/DecisionProgramming.jl/dev/), in particular *Influence Diagram* and *Decision Model* sections.
+The *Robust Decision Model* section extends the *Decision Model* from *Decision Programming* into a robust decision model. A robust decision model refers to a decision model with the [Best Worst-Case Expected Value](@ref best-worst-case-expected-value) formulation over a polyhedral ambiguity set spanned by robust chance nodes. We also define a locally robust decision model to have only one robust chance node. A globally robust decision model may have multiple robust chance nodes. We cover only the formulation of the locally robust decision model.
 
 
 ## Discrete Polyhedral Ambiguity Set
-To solve the best worst-case expected value, we must form the discrete polyhedral ambiguity set as discussed in [Uncertainty Sets](@ref uncertainty-set) for the [Probabilities](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/influence-diagram/#Probabilities) of a **robust chance node** $i∈C.$
+To solve the best worst-case expected value, we must form the discrete polyhedral ambiguity set as discussed in Uncertainty Sets for the [Probabilities](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/influence-diagram/#Probabilities) of a **robust chance node** $i∈C.$
 
 We denote the probability of state $s_i∈S_i$ with information path $s_{I(i)}∈𝐒_{I(i)}$ as $ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})$ and difference as $𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)}).$ Then, we can denote the probability vector of given information path as
 
@@ -61,10 +61,9 @@ $$π(𝐬,i,𝐝)≥p(𝐬,i,𝐝)+∑_{j∈D}z(𝐬_j∣𝐬_{I(j)})-|D|,\quad 
 The symbol $z(𝐬_j∣𝐬_{I(j)})$ denotes the decision variables.
 
 
-## Best Worst-Case Expected Value
-As defined in the [Best Worst-Case Over Product Uncertainty Set](@ref best-worst-case-over-product-uncertainty-set), we can define the maximin expected value and minimax regret formulations of the robust decision model.
+## Maximin Expected Value
+As defined in the [Best Worst-Case Over Product Uncertainty Set](@ref maximin-expected-value-over-product-uncertainty-set), we can define the maximin expected value and minimax regret formulations of the robust decision model.
 
-### Maximin Expected Value
 We maximize the minimum expected value over all possible combinations of difference vectors
 
 $$\underset{Z∈ℤ}{\text{maximize}} \min_{𝐃∈Δ^{×}} ∑_{s_{I(i)}∈𝐒_{I(i)}} 𝔼^{′}(X∣Z,i,𝐃_{s_{I(i)}},s_{I(i)})$$

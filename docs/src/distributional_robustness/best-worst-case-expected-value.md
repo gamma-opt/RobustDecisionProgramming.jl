@@ -1,8 +1,4 @@
 # [Best Worst-Case Expected Value](@id best-worst-case-expected-value)
-## Overview
-It finds the best worst-case expected value when there is uncertainty in the probability distribution. In this case, best means maximizing over decision variables, and worst-case expected value means minimum expected value over an uncertainty set that accounts for the distribution's uncertainty. In this work, we only consider discrete probability distributions.
-
-
 ## Discrete Probabilities
 We denote a finite set the **states** for probabilities and utilities as
 

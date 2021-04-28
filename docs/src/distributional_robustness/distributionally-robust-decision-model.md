@@ -1,8 +1,4 @@
 # [Distributionally Robust Decision Model](@id distributionally-robust-decision-model)
-## Overview
-The *Robust Decision Model* section extends the *Decision Model* from *Decision Programming* into a robust decision model. A robust decision model refers to a decision model with the [Best Worst-Case Expected Value](@ref best-worst-case-expected-value) formulation over a polyhedral ambiguity set spanned by robust chance nodes. We also define a locally robust decision model to have only one robust chance node. A globally robust decision model may have multiple robust chance nodes. We cover only the formulation of the locally robust decision model.
-
-
 ## Discrete Polyhedral Ambiguity Set
 To solve the best worst-case expected value, we must form the discrete polyhedral ambiguity set as discussed in Uncertainty Sets for the [Probabilities](https://gamma-opt.github.io/DecisionProgramming.jl/dev/decision-programming/influence-diagram/#Probabilities) of a **robust chance node** $i∈C.$
 

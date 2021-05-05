@@ -6,11 +6,11 @@ We denote the probability of state $s_i∈S_i$ with information path $s_{I(i)}�
 
 $$𝐩(s_{I(i)})=(ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i)$$
 
-Furthermore, we can use cross-assignment on the probability vector to form the optimal discrete polyhedral ambiguity set
+Furthermore, we can use cross-assignment on the probability vector to form the optimal [Polyhedral Ambiguity Set](@ref polyhedral-uncertainty-set)
 
-$$Δ_{𝐩(s_{I(i)})}.$$
+$$𝐃_{𝐩(s_{I(i)})}.$$
 
-We should ignore all inactive chance states when forming the ambiguity set. The elements of the ambiguity set are difference vectors, denoted as $𝐝∈Δ_{𝐩(s_{I(i)})}$ where
+We should ignore all inactive chance states when forming the ambiguity set. The elements of the ambiguity set are difference vectors, denoted as $𝐝∈𝐃_{𝐩(s_{I(i)})}$ where
 
 $$𝐝=(𝔻(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i).$$
 
@@ -62,11 +62,11 @@ As defined in the [Best Worst-Case Over Product Uncertainty Set](@ref maximin-ex
 
 We maximize the minimum expected value over all possible combinations of difference vectors
 
-$$\underset{Z∈ℤ}{\text{maximize}} \min_{𝐃∈Δ^{×}} ∑_{s_{I(i)}∈𝐒_{I(i)}} 𝔼^{′}(X∣Z,i,𝐃_{s_{I(i)}},s_{I(i)})$$
+$$\underset{Z∈ℤ}{\text{maximize}} \min_{𝐃∈𝐃^{×}} ∑_{s_{I(i)}∈𝐒_{I(i)}} 𝔼^{′}(X∣Z,i,𝐃_{s_{I(i)}},s_{I(i)})$$
 
 where the product ambiguity set is
 
-$$Δ^{×}=∏_{s_{I(i)}∈𝐒_{I(i)}}Δ_{𝐩(s_{I(i)})}.$$
+$$𝐃^{×}=∏_{s_{I(i)}∈𝐒_{I(i)}}𝐃_{𝐩(s_{I(i)})}.$$
 
 ---
 
@@ -74,7 +74,7 @@ The linearized maximin is
 
 $$\underset{Z∈ℤ}{\text{maximize}} ∑_{s_{I(i)}∈𝐒_{I(i)}} x_{s_{I(i)}}$$
 
-$$x_{s_{I(i)}} ≤ 𝔼^{′}(X∣Z,i,𝐝,s_{I(i)}),\quad ∀𝐝∈Δ_{𝐩(s_{I(i)})},\, s_{I(i)}∈𝐒_{I(i)}$$
+$$x_{s_{I(i)}} ≤ 𝔼^{′}(X∣Z,i,𝐝,s_{I(i)}),\quad ∀𝐝∈𝐃_{𝐩(s_{I(i)})},\, s_{I(i)}∈𝐒_{I(i)}$$
 
 ---
 
@@ -82,4 +82,4 @@ By substituting the path probability variables with uncertainty to the definitio
 
 $$\underset{Z∈ℤ}{\text{maximize}} ∑_{s_{I(i)}∈𝐒_{I(i)}} x_{s_{I(i)}}$$
 
-$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} π(𝐬,i,𝐝)⋅\mathcal{U}(𝐬),\quad ∀𝐝∈Δ_{𝐩(s_{I(i)})},\, s_{I(i)}∈𝐒_{I(i)}.$$
+$$x_{s_{I(i)}} ≤ ∑_{𝐬∈𝐒,\, 𝐬_{I(i)}=s_{I(i)}} π(𝐬,i,𝐝)⋅\mathcal{U}(𝐬),\quad ∀𝐝∈𝐃_{𝐩(s_{I(i)})},\, s_{I(i)}∈𝐒_{I(i)}.$$

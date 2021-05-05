@@ -15,8 +15,6 @@ $$O\big(∏_{i∈\hat{C}} |S_i|!\big).$$
 
 However, the constant in factorial bound is less than one and in certain special cases, the bound is polynomial, which makes the distributionally robust model tractable when the number of states is reasonably small. Due to the complexity, we restrict our *Distributionally Robust Decision Model* to only **one** robust chance node, that is $|\hat{C}|=1.$
 
-For example, we applied robust decision programming to the [N-monitoring](https://gamma-opt.github.io/DecisionProgramming.jl/dev/examples/n-monitoring/) example from decision programming such that we made the failure node robust.
-
 Generalizing the model and finding tractable formulations for models with multiple robust chance nodes or a larger number of chance states is left for future research.
 
 

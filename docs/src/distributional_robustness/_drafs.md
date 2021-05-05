@@ -1,3 +1,7 @@
+# Drafts
+For example, we applied robust decision programming to the [N-monitoring](https://gamma-opt.github.io/DecisionProgramming.jl/dev/examples/n-monitoring/) example from decision programming such that we made the failure node robust.
+
+
 ### Minimax Regret
 Solve the original, non-robust problem by maximizing the expected value over decision variables $Z$
 

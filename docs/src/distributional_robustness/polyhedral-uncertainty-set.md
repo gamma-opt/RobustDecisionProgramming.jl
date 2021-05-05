@@ -1,4 +1,4 @@
-# Discrete Polyhedral Uncertainty Set
+# [Polyhedral Uncertainty Set](@id polyhedral-uncertainty-set)
 ## Cross-Assignment
 The minimization problem over a polyhedral ambiguity set $(l=1)$ is
 
@@ -65,7 +65,7 @@ Proof of minimum cross-assignment
 ## All Optimal Cross-assignments
 The discrete polyhedral uncertainty set is the set of optimal cross-assignments over all utility orderings.
 
-$$Δ_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}=\{𝐝^{∗}(𝐮(I^{′}))∣I^{′}∈\mathcal{P}(I)\}.$$
+$$𝐃_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}=\{𝐝^{∗}(𝐮(I^{′}))∣I^{′}∈\mathcal{P}(I)\}.$$
 
 We generate all possible utility ordering of by generating all permutations of $I$ denoted as $\mathcal{P}(I),$ which has finite size $|\mathcal{P}(I)|=k!.$ For example, utility ordering $I^{′}=(1,2,...,k)∈\mathcal{P}(I)$ corresponds to ordering $u_1≤u_2≤...≤u_k.$
 
@@ -86,6 +86,6 @@ $$\{(I_{+}^{′},i_{+},I_{0}^{′},i_{-},I_{-}^{′})∣ I_{+}^{′}∈\mathcal{
 
 have the same optimal cross assignment. Therefore, the bound for the size of the uncertainty set is
 
-$$|Δ_𝐩|≤\max_{I_{+},I_{0},I_{-}} \frac{|\mathcal{P}(I)|}{|\mathcal{P}(I_{+})||\mathcal{P}(I_{0})||\mathcal{P}(I_{-})|}≤|\mathcal{P}(I)|.$$
+$$|𝐃_𝐩|≤\max_{I_{+},I_{0},I_{-}} \frac{|\mathcal{P}(I)|}{|\mathcal{P}(I_{+})||\mathcal{P}(I_{0})||\mathcal{P}(I_{-})|}≤|\mathcal{P}(I)|.$$
 
 Note that the empty set has one permutation $|\mathcal{P}(∅)|=1.$

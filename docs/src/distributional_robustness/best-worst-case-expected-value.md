@@ -1,6 +1,6 @@
 # [Best Worst-Case Expected Value](@id best-worst-case-expected-value)
-## Uncertainty Set
-We denote a finite set the **states** for probabilities and utilities as
+## Probabilities
+We denote a finite set of **states** for probabilities and utilities as
 
 $$I=\{1,2,...,k\},\quad k∈ℕ.$$
 
@@ -10,8 +10,45 @@ $$𝐩=(p_1,p_2,...,p_k),$$
 
 such that all elements are greater or equal to zero $𝐩≥0$ and the sum of all elements is one $𝐩⋅𝟏(k)=1$ where $𝟏(k)=(1)^k$ is a vector of $k$ ones and $⋅$ is the dot product.
 
----
+We also define **utilities** associated with the states as a vector of real numbers
 
+$$𝐮=(u_1,u_2,...,u_k)∈ℝ^k.$$
+
+
+## Maximin Expected Value
+### [Expected Value](@id expected-value)
+Now, we can define **expected value** as the dot product of probabilities and utilities
+
+$$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
+
+### Over Uncertainty Set
+We define an **uncertainty set** is a set of probabilities $𝐐.$ Then, the problem as maximizing the minimum expected value over the uncertainty set over decision variables $Z$ is
+
+$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
+
+We can linearize the expression to the form
+
+$$\underset{z∈Z}{\operatorname{maximize}}\, x$$
+
+$$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
+
+### [Over Product Uncertainty Set](@id maximin-expected-value-over-product-uncertainty-set)
+We define multiple uncertainty sets as $𝐐_1,...,𝐐_m$ with indices $L=\{1,...,m\},\, m∈ℕ.$ Then, a **product uncertainty set** is
+
+$$𝐐_L^{×}=∏_{l∈L} 𝐐_{l}.$$
+
+The probabilities in decision programming will appear in the product form. We define the problem as maximizing the minimum expected value over decision variables $Z$
+
+$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{(𝐪_1,...,𝐪_m)∈𝐐_L^{×}} ∑_{l∈L} 𝔼(𝐪_l, 𝐮_l(z))$$
+
+We can linearize the expression to the form
+
+$$\underset{z∈Z}{\operatorname{maximize}}\, ∑_{l∈L} x_l$$
+
+$$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{l},\, l∈L$$
+
+
+## Uncertainty Set
 Given two finite sets of discrete probabilities, the **pivot** $𝐩$ and **deviated** $𝐪$ over states $I.$ We define the **difference** between the distributions as
 
 $$𝐝=𝐪-𝐩.$$
@@ -58,50 +95,10 @@ Then, we define the **continuous uncertainty set** that consists of all deviated
 
 $$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
 
-An **uncertainty set** $𝐐_{𝐩}$ is a finite subset of $\bar{𝐐}_{𝐩}$ such that it contains all optimizing probabilities.
+An **uncertainty set** $𝐐_{𝐩}$ is a finite subset of $\bar{𝐐}_{𝐩}$ such that it contains all minimizing probabilities for the **maximin expected value** objective.
 
 
-## [Expected Value](@id expected-value)
-We also define **utilities** associated with the states as a vector of real numbers
-
-$$𝐮=(u_1,u_2,...,u_k)∈ℝ^k.$$
-
-Now, we can define **expected value** as the dot product of probabilities and utilities
-
-$$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
-
-
-## Maximin Expected Value
-### Over Uncertainty Set
-We define the problem as maximizing the minimum expected value over decision variables $Z$
-
-$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
-
-Next, we linearize the expression to a form
-
-$$\underset{z∈Z}{\operatorname{maximize}}\, x$$
-
-$$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
-
-### [Over Product Uncertainty Set](@id maximin-expected-value-over-product-uncertainty-set)
-Let $𝐏=\{𝐩_1,...,𝐩_m\},\, m∈ℕ$ be a finite set of probability vectors. We define the **product uncertainty set** as
-
-$$𝐐_𝐏^{×}=∏_{l=1}^m 𝐐_{𝐩_l}.$$
-
-The probabilities in decision programming will appear in the product form.
-
-We define the problem as maximizing the minimum expected value over decision variables $Z$
-
-$$\underset{z∈Z}{\operatorname{maximize}}\, \min_{(𝐪_1,...,𝐪_l)∈𝐐_𝐏^{×}} ∑_{l=1}^m 𝔼(𝐪_l, 𝐮_l(z))$$
-
-Next, we linearize the expression to a form
-
-$$\underset{z∈Z}{\operatorname{maximize}}\, ∑_{l=1}^m x_l$$
-
-$$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{𝐩_l},\, l∈\{1,...,m\}$$
-
-
-## Discrete Uncertainty Set
+## Discretization
 We have to discretize the uncertainty set to formulate the mathematical model.
 
 We can define the minimum expected value over the continuous uncertainty set with utilities $𝐮$ as
@@ -116,13 +113,12 @@ Now, we can obtain a discrete ambiguity set
 
 $$𝐃_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}.$$
 
-The discrete set of all possible minimizing distributions
-
-$$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈𝐃_𝐩\}.$$
+The **cross-assignment** in [**Polyhedral Uncertainty Set**](@ref polyhedral-uncertainty-set) solves the discretization for $l=1.$
 
 
-## Appendix
-Proof that an ambiguity set is convex. Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $𝐝=(1-λ)𝐝_1+λ𝐝_2$ with $λ∈[0,1].$
+## Proofs
+### Convexity of Ambiguity Set
+Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $𝐝=(1-λ)𝐝_1+λ𝐝_2$ with $λ∈[0,1].$
 
 1) Minimum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$
 2) Maximum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≤(1-λ)𝐝^{+}+λ𝐝^{+}=𝐝^{+}.$

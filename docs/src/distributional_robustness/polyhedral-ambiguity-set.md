@@ -1,4 +1,4 @@
-# [Polyhedral Uncertainty Set](@id polyhedral-uncertainty-set)
+# [Polyhedral Ambiguity Set](@id polyhedral-ambiguity-set)
 ## Cross-Assignment
 The minimization problem over a polyhedral ambiguity set $(l=1)$ is
 

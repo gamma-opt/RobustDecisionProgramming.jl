@@ -1,6 +1,12 @@
 # Drafts
 For example, we applied robust decision programming to the [N-monitoring](https://gamma-opt.github.io/DecisionProgramming.jl/dev/examples/n-monitoring/) example from decision programming such that we made the failure node robust.
 
+Then, we define the **continuous uncertainty set** that consists of all deviated distributions around the pivot distribution
+
+$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
+
+An **uncertainty set** $𝐐_{𝐩}$ is a finite subset of $\bar{𝐐}_{𝐩}$ such that it contains all minimizing probabilities for the **maximin expected value** objective.
+
 
 ### Minimax Regret
 Solve the original, non-robust problem by maximizing the expected value over decision variables $Z$

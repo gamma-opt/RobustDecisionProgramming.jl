@@ -7,6 +7,17 @@ $$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
 
 An **uncertainty set** $𝐐_{𝐩}$ is a finite subset of $\bar{𝐐}_{𝐩}$ such that it contains all minimizing probabilities for the **maximin expected value** objective.
 
+### Over Uncertainty Set
+We define an **uncertainty set** as a finite set of probability vectors $𝐐.$ Then, similar to [Wald's maximin model](https://en.wikipedia.org/wiki/Wald%27s_maximin_model), the problem as maximizing the minimum expected value over the uncertainty set over decision variables $Z$ is
+
+$$\max_{z∈Z}\, \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
+
+We can reformulate the **maxmin over uncertainty set** in mathematical programming as
+
+$$\max_{z∈Z}\, x$$
+
+$$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
+
 
 ### Minimax Regret
 Solve the original, non-robust problem by maximizing the expected value over decision variables $Z$

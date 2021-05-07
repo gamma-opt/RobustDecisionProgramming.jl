@@ -36,7 +36,7 @@ The expected value is the sum of partial expected values over all information pa
 
 ---
 
-In relation to the notation used when defining the [Expected Value](@ref expected-value), we have the elements of discrete probabilities $𝐪$ as
+In relation to the notation used when defining the expected value, we have the elements of discrete probabilities $𝐪$ as
 
 $$ℙ(X_i=𝐬_i∣X_{I(i)}=𝐬_{I(i)})+𝐝_{𝐬_i},$$
 
@@ -58,7 +58,7 @@ The symbol $z(𝐬_j∣𝐬_{I(j)})$ denotes the decision variables.
 
 
 ## Maximin Expected Value
-As defined in the [Best Worst-Case Over Product Uncertainty Set](@ref maximin-expected-value-over-product-uncertainty-set), we can define the maximin expected value and minimax regret formulations of the robust decision model.
+As defined in the [Best Worst-Case Expected Value](@ref best-worst-case-expected-value), we can define the maximin expected value and minimax regret formulations of the robust decision model.
 
 We maximize the minimum expected value over all possible combinations of difference vectors
 

@@ -15,35 +15,26 @@ $$𝐮=(u_1,u_2,...,u_k)∈ℝ^k.$$
 Together, a vector of probabilities and utilities define a **probability distribution**.
 
 
-## Maximin Expected Value
-### [Expected Value](@id expected-value)
+## [Maximin Expected Value](@id maximin-expected-value)
 We can define the **expected value** as the dot product of probabilities and utilities
 
 $$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
 
-### [Over Uncertainty Set](@id maximin-expected-value-over-uncertainty-set)
-We define an **uncertainty set** as a finite set of probability vectors $𝐐.$ Then, similar to [Wald's maximin model](https://en.wikipedia.org/wiki/Wald%27s_maximin_model), the problem as maximizing the minimum expected value over the uncertainty set over decision variables $Z$ is
-
-$$\max_{z∈Z}\, \min_{𝐪∈𝐐} 𝔼(𝐪, 𝐮(z)).$$
-
-We can reformulate the **maxmin over uncertainty set** in mathematical programming as
-
-$$\max_{z∈Z}\, x$$
-
-$$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
-
-### [Over Product Uncertainty Set](@id maximin-expected-value-over-product-uncertainty-set)
-In decision programming, a chance node has multiple states and each state is associated with a probability distribution. Hence, in robust decision programming, each probability vector is associated with an uncertainty set. We need to account for all combinations of the uncertainty sets by extending the maximin expected value over an uncertainty set to over a product of the uncertainty sets.
+We define an **uncertainty set** as a finite set of probability vectors $𝐐.$ In decision programming, a chance node has multiple states and each state is associated with a probability distribution. Hence, in robust decision programming, each probability vector is associated with an uncertainty set. We need to account for all combinations of the uncertainty sets by formulating the maximin expected value to over a product of the uncertainty sets.
 
 We denote multiple uncertainty sets as $𝐐_1,...,𝐐_m$ with indices $L=\{1,...,m\}$ where $m∈ℕ.$ Then, a **product uncertainty set** is
 
 $$𝐐_L^{×}=∏_{l∈L} 𝐐_{l}.$$
 
-Given multiple utility vectors $𝐮_1,...,𝐮_m$, we define the problem as maximizing the minimum expected value over the product uncertainty set over decision variables $Z$ as
+Given multiple utility vectors $𝐮_1,...,𝐮_m$, we define the problem as maximizing the minimum expected value over the product uncertainty set over decision variables $Z$ similar to [Wald's maximin model](https://en.wikipedia.org/wiki/Wald%27s_maximin_model)
 
-$$\max_{z∈Z}\, \min_{(𝐪_1,...,𝐪_m)∈𝐐_L^{×}} ∑_{l∈L} 𝔼(𝐪_l, 𝐮_l(z))$$
+$$\max_{z∈Z}\, \min_{(𝐪_1,...,𝐪_m)∈𝐐_L^{×}} ∑_{l∈L} 𝔼(𝐪_l, 𝐮_l(z)).$$
 
-We can reformulate the **maximin over product uncertainty set** in mathematical programming as
+We can simplify the formulation to a more computationally tractable form
+
+$$\max_{z∈Z}\, ∑_{l∈L} \min_{𝐪∈𝐐_l} 𝔼(𝐪, 𝐮_l(z)).$$
+
+Now, we can reformulate the maximin over product uncertainty set in mathematical programming as
 
 $$\max_{z∈Z}\, ∑_{l∈L} x_l$$
 

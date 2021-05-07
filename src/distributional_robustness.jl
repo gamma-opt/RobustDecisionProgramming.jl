@@ -88,22 +88,22 @@ function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float
     if (h - l ≤ 0) || (ϵ ≤ 0)
         return d
     end
-    a = abs(d⁻[l] - d[l])
-    b = abs(d⁺[h] - d[h])
+    a = abs(d⁺[l] - d[l])
+    b = abs(d⁻[h] - d[h])
     if a < b
         c = min(a, ϵ)
-        d[l] -= c
-        d[h] += c
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l+1, h, d, d⁻, d⁺, ϵ - c)
     elseif a > b
         c = min(b, ϵ)
-        d[l] -= c
-        d[h] += c
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l, h-1, d, d⁻, d⁺, ϵ - c)
     else
         c = min(a, ϵ)
-        d[l] -= c
-        d[h] += c
+        d[l] += c
+        d[h] -= c
         return cross_assignment(l+1, h-1, d, d⁻, d⁺, ϵ - c)
     end
 end

@@ -20,7 +20,7 @@ We can define the **expected value** as the dot product of probabilities and uti
 
 $$𝔼(𝐩,𝐮)=𝐩⋅𝐮.$$
 
-We define an **uncertainty set** as a finite set of probability vectors $𝐐.$ In decision programming, a chance node has multiple states and each state is associated with a probability distribution. Hence, in robust decision programming, each probability vector is associated with an uncertainty set. We need to account for all combinations of the uncertainty sets by formulating the maximin expected value to over a product of the uncertainty sets.
+We define an **uncertainty set** as a set of probability vectors $𝐐.$ In decision programming, a chance node has multiple states and each state is associated with a probability distribution. Hence, in robust decision programming, each probability vector is associated with an uncertainty set. We need to account for all combinations of the uncertainty sets by formulating the maximin expected value to over a product of the uncertainty sets.
 
 We denote multiple uncertainty sets as $𝐐_1,...,𝐐_m$ with indices $L=\{1,...,m\}$ where $m∈ℕ.$ Then, a **product uncertainty set** is
 
@@ -40,13 +40,9 @@ $$\max_{z∈Z}\, ∑_{l∈L} x_l$$
 
 $$x_l ≤ 𝔼(𝐪, 𝐮_l(z)),\quad ∀𝐪∈𝐐_{l},\, l∈L$$
 
-Regarding to the computational complexity, the number of constraints in the above formulation is proportional to the total size of the uncertainty sets
 
-$$∑_{l∈L} |𝐐_l|.$$
-
-
-## Uncertainty Set
-We can formulate an uncertainty set $𝐐_{𝐩}$ around a **pivot probability** $𝐩$ by formulating an ambiguity set $𝐃_{𝐩}$ of **deviations** $𝐝$ such that each element of the uncertainty set satisfies
+## Local Uncertainty Set
+We can formulate a **local uncertainty set** $𝐐_{𝐩}$ around a **pivot probability** $𝐩$ by formulating a **local ambiguity set** $𝐃_{𝐩}$ of **deviations** $𝐝$ such that each element of the uncertainty set satisfies
 
 $$𝐪=𝐩+𝐝.$$
 
@@ -54,10 +50,14 @@ We can express the uncertainty set in terms of the ambiguity set as
 
 $$𝐐_𝐩=\{𝐩+𝐝∣𝐝∈𝐃_𝐩\}.$$
 
-We focus on forming the ambiguity set.
+We can also define the minimum expected value over the local uncertainty set in terms of the local ambiguity set
+
+$$\min_{𝐪∈𝐐_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈𝐃_𝐩} 𝔼(𝐩+𝐝, 𝐮) = 𝔼(𝐩,𝐮) + \min_{𝐝∈𝐃_𝐩} 𝔼(𝐝,𝐮).$$
+
+Therefore, we can focus on forming the local ambiguity set and minimizing expected value over it.
 
 
-## Ambiguity Set
+## Local Ambiguity Set
 We define the **lower bounds** $𝐝^{-}≤0$ and **upper bounds** $𝐝^{+}≥0$ for deviations $𝐝$ as parameters such that
 
 $$𝐝^{-}≤𝐝≤𝐝^{+}.$$
@@ -80,27 +80,16 @@ By setting $ϵ=1$ we can make the magnitude constraint inactive.
 
 ---
 
-Given parameters lower bound $-𝐩≤𝐝^{-}≤0$, upper bound $0≤𝐝^{+}≤1-𝐩$, and uncertainty radius $0≤ϵ≤1,$ the **continuous ambiguity set** is the set of all deviations that satisfy the defined constraints
+Given parameters lower bound $-𝐩≤𝐝^{-}≤0$, upper bound $0≤𝐝^{+}≤1-𝐩$, and uncertainty radius $0≤ϵ≤1,$ the **continuous local ambiguity set** is the set of all deviations that satisfy the defined constraints
 
 $$\bar{𝐃}_𝐩=\{𝐝∈[𝐝^{-},𝐝^{+}]∣ 𝐝⋅𝟏(k)=0,\, \|𝐝\|_l≤2ϵ\}.$$
 
-The ambiguity set is convex, which makes optimization possible. Smaller values of $l$ make the ambiguity set more pessimistic and larger values more optimistic. We obtain the **polyhedral ambiguity set** by setting $l=1.$
+The ambiguity set is convex, which makes optimization tractable. Smaller values of $l$ make the ambiguity set more pessimistic and larger values more optimistic. We refer to the ambiguity set as **polyhedral** when $l=1.$
+
+To form an explicit formulation of the mathematical programming model, we have to **discretize** the ambiguity set. A **discrete local ambiguity set** $𝐃_𝐩$ is a finite subset of $\bar{𝐃}_𝐩$ such that it contains all deviations $𝐝$ for all utility vectors $𝐮∈ℝ^{k}$ that can minimize the expected value. We can solve the discretization for [local polyhedral ambiguity set](@ref polyhedral-ambiguity-set) using the **cross-assignment** algorithm.
 
 
-## Discretization
-Since we cannot use a continuous set in the mathematical programming formulation, we have to discretize it. We begin by denoting the continous uncertainty set as
-
-$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
-
-We can define the minimum expected value over the continuous uncertainty set as
-
-$$\min_{𝐪∈\bar{𝐐}_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈\bar{𝐃}_𝐩} 𝔼(𝐩+𝐝, 𝐮) = 𝔼(𝐩,𝐮) + \min_{𝐝∈\bar{𝐃}_𝐩} 𝔼(𝐝,𝐮).$$
-
-Then, the **ambiguity set** $𝐃_𝐩$ is a finite subset of $\bar{𝐃}_𝐩$ such that it contains all deviations $𝐝$ for all utility vectors $𝐮∈ℝ^{k}$ that can minimize the expected value. We can solve the discretization for [polyhedral ambiguity set](@ref polyhedral-ambiguity-set) using the **cross-assignment** algorithm.
-
-
-## Proofs
-### Convexity of Ambiguity Set
+## Proof of Convexity of Ambiguity Set
 Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $𝐝=(1-λ)𝐝_1+λ𝐝_2$ with $λ∈[0,1].$
 
 1) Minimum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$

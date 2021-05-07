@@ -7,6 +7,16 @@ $$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
 
 An **uncertainty set** $𝐐_{𝐩}$ is a finite subset of $\bar{𝐐}_{𝐩}$ such that it contains all minimizing probabilities for the **maximin expected value** objective.
 
+---
+
+We begin by denoting the continuous uncertainty set as
+
+$$\bar{𝐐}_𝐩=\{𝐩+𝐝∣𝐝∈\bar{𝐃}_𝐩\}.$$
+
+We can define the minimum expected value over the continuous uncertainty set as
+
+$$\min_{𝐪∈\bar{𝐐}_𝐩} 𝔼(𝐪, 𝐮) = \min_{𝐝∈\bar{𝐃}_𝐩} 𝔼(𝐩+𝐝, 𝐮) = 𝔼(𝐩,𝐮) + \min_{𝐝∈\bar{𝐃}_𝐩} 𝔼(𝐝,𝐮).$$
+
 ### Over Uncertainty Set
 We define an **uncertainty set** as a finite set of probability vectors $𝐐.$ Then, similar to [Wald's maximin model](https://en.wikipedia.org/wiki/Wald%27s_maximin_model), the problem as maximizing the minimum expected value over the uncertainty set over decision variables $Z$ is
 
@@ -16,7 +26,13 @@ We can reformulate the **maxmin over uncertainty set** in mathematical programmi
 
 $$\max_{z∈Z}\, x$$
 
+---
+
 $$x≤𝔼(𝐪, 𝐮(z)),\quad ∀𝐪∈𝐐.$$
+
+Regarding to the computational complexity, the number of constraints in the above formulation is proportional to the total size of the uncertainty sets
+
+$$∑_{l∈L} |𝐐_l|.$$
 
 
 ### Minimax Regret

@@ -102,9 +102,10 @@ function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float
     end
 end
 
-function cross_assignment(n::Int, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
-    d = zeros(n)
-    cross_assignment(1, n, d, d⁻, d⁺, ϵ)
+"""Compute cross-assignment."""
+function cross_assignment(k::Int, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+    d = zeros(k)
+    cross_assignment(1, k, d, d⁻, d⁺, ϵ)
 end
 
 """Computes the optimal cross assignment from deviation.
@@ -120,9 +121,9 @@ function cross_assignment(dev::Deviation)
 end
 
 """Polyhedral uncertainty"""
-function polyhedral_uncertainty(mask::Vector{Int}, dev::Deviation)
+function polyhedral_uncertainty(perm::Vector{Int}, dev::Deviation)
     q = copy(dev.p)
-    q[mask] += cross_assignment(length(mask), dev.d⁻[mask], dev.d⁺[mask], dev.ϵ)
+    q[perm] += cross_assignment(length(perm), dev.d⁻[perm], dev.d⁺[perm], dev.ϵ)
     return q
 end
 
@@ -133,7 +134,7 @@ function polyhedral_uncertainty_set(dev::Deviation)::Array{Vector{Float64}}
         return [p]
     else
         i = [i for i in LinearIndices(p) if !iszero(p[i])]
-        s = Set(polyhedral_uncertainty(mask, dev) for mask in permutations(i))
+        s = Set(polyhedral_uncertainty(perm, dev) for perm in permutations(i))
         return collect(s)
     end
 end

@@ -1,68 +1,103 @@
 # [Polyhedral Ambiguity Set](@id polyhedral-ambiguity-set)
-## Cross-Assignment
-The minimization problem over a polyhedral ambiguity set $(l=1)$ is
+## Problem
+Given the parameters lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the uncertainty radius $ϵ∈[0,1],$ and an utility vector $(u_1,...,u_k),$ we can express finding the minimizing deviation over a polyhedral ambiguity set in the form:
 
-$$\argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k$$
+$$𝐝^{∗} = \argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k,$$
 
-$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\}$$
+subject to
 
-$$d_1+d_2+...+d_k=0$$
+$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\},$$
 
-$$\|𝐝\|_1=|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
+$$d_1+d_2+...+d_k=0,$$
 
-The parameters are lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the radius parameter is $ϵ∈[0,1]$ and an ordering for the utilities $𝐮=(u_1,...,u_k).$
+$$|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
 
-We define **cross-assignment** for ordering $u_1≤u_2≤...≤u_k$ as an assignment of differences to **positive differences** $d_1,...,d_j≥0$ and **negative differences** $d_{j+1},...,d_k≤0$ where $j∈\{1,...,k-1\}$ such that they satisfy the constraints. An **optimal cross-assignment** finds values for the positive and negative differences that minimize the objective.
+We can solve the problem if we give an ordering for the utility vector. Since the utility vector is finite, it has a finite number of orderings. Therefore, the set of solutions for all the orderings forms the polyhedral ambiguity set.
 
-## Proof of Negativity
-The objective value of cross-assignment is always negative or zero.
-
----
-
-For a cross-assignment with $k=2$ and $j=1$ we have:
-
-$$\begin{aligned}
-u_1⋅d_1 + u_2⋅d_2 &≤ 0 \\
-u_1⋅d_1 &≤ u_2⋅(-d_2) \\
-u_1⋅d_1 &≤ u_2⋅d_1 \\
-u_1 &≤ u_2.
-\end{aligned}$$
-
----
-
-For cross-assignment with $k>2$ and for all $j∈\{1,...,k-1\}$ we have:
-
-$$\begin{aligned}
-u_1⋅d_1 + ... + u_k⋅d_k &≤ u_j⋅d_1 + ... + u_j⋅d_j + u_{j+1}⋅d_{j+1} + ... + u_{j+1}⋅d_{k} \\
-&= u_j⋅(d_1+...+d_j) + u_{j+1}⋅(d_{j+1}+...+d_k) \\
-& ≤ 0.
-\end{aligned}$$
-
-We obtain the last step from the result for $k=2.$
-
-## Proof of Minimum
-The condition that some cross-assignment is less or equal to another cross-assignment.
-
-Let $u_1≤u_2$ and $d_1+d_2=d_1^{′}+d_2^{′}$ where $d_1=d_1^{′}+d^{′′}$ and $d_2=d_2^{′}-d^{′′}$ with $d^{′′}≥0.$ Then, we have:
-
-$$\begin{aligned}
-u_1⋅d_1+u_2⋅d_2 &= u_1⋅(d_1^{′}+d^{′′})+u_2⋅d_2 \\
-&= u_1⋅d_1^{′}+u_1⋅d^{′′}+u_2⋅d_2 \\
-&≤ u_1⋅d_1^{′}+u_2⋅d^{′′}+u_2⋅d_2 \\
-&= u_1⋅d_1^{′}+u_2⋅(d_2+d^{′′}) \\
-&= u_1⋅d_1^{′}+u_2⋅d_2^{′}.
-\end{aligned}$$
-
-It satisfies the constraint
-
-$$|d_1|+|d_2|=|d_1^{′}+d^{′′}|+|d_2^{′}-d^{′′}|=|d_1^{′}|+|d_2^{′}|$$
-
-If $d_1,d_1^{′}≥0 ∧ d_2,d_2^{′}≤0$ or $d_1,d_1^{′},d_2,d_2^{′}≥0$ or $d_1,d_1^{′},d_2,d_2^{′}≤0.$
 
 ## Optimal Cross-Assignment
-Proof of minimum cross-assignment
+```julia
+function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+    if (h - l ≤ 0) || (ϵ ≤ 0)
+        return d
+    end
+    δ_l = d⁺[l] - d[l]
+    δ_h = d[h] - d⁻[h]
+    δ = min(δ_l, δ_h, ϵ)
+    d[l] += δ
+    d[h] -= δ
+    if δ_l < δ_h
+        return cross_assignment(l+1, h, d, d⁻, d⁺, ϵ-δ)
+    elseif δ_l > δ_h
+        return cross_assignment(l, h-1, d, d⁻, d⁺, ϵ-δ)
+    else
+        return cross_assignment(l+1, h-1, d, d⁻, d⁺, ϵ-δ)
+    end
+end
 
-## All Optimal Cross-assignments
+function cross_assignment(k::Int, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+    d = zeros(k)
+    cross_assignment(1, k, d, d⁻, d⁺, ϵ)
+end
+```
+
+The `cross_assignment` algorithm computes the optimal cross-assignment given an **utility ordering** of $u_1≤u_2≤...≤u_k,$ such that the sequence $𝐝_0,𝐝_1,𝐝_2,...,𝐝_n$ converges toward the optimal cross-assignment $𝐝^{∗}=𝐝_n$ in at most $n≤k$ iterations.
+
+---
+
+Given $u_1≤u_2≤...≤u_k$ and previous iteration,  $𝐝=(d_1,d_2,...,d_k),$ the new iteration is $𝐝^{′}=(d_1^{′},d_2^{′},...,d_k^{′})$ such that $l,h∈I$ and $δ_l,δ_h∈ℝ$ and $d_l^{′}=d_l+δ_l$ and $d_h^{′}=d_h+δ_h$ and $d_i^{′}=d_i$ for all $i∈I∖\{l,h\}.$
+
+---
+
+Conservation of mass
+
+$$𝐝^{′}⋅𝟏(k)=0 ⟹ δ_h=-δ_l.$$
+
+---
+
+Minimum:
+
+$$\begin{aligned}
+𝐝^{′}⋅𝐮&=d_l^{′}+d_h^{′}+∑_{i}d_i^{′} u_i \\
+&=(d_l+δ_l)u_l+(d_h-δ_l)u_h+∑_{i}d_i u_i \\
+&=𝐝⋅𝐮+δ_l (u_l-u_h) \\
+&≤𝐝⋅𝐮
+\end{aligned}$$
+
+By choosing $δ_l>0$ and $u_l≤u_h$ which implies $l≤h.$
+
+---
+
+Negativity:
+
+$$𝐝^{′}⋅𝐮≤𝐝_0⋅𝐮=𝟎 ⟹ 𝐝_0=𝟎.$$
+
+---
+
+Bounds:
+
+$$d_l^{′}≤d_l^{+} ⟹ d_l+δ_l≤d_l^{+} ⟹ δ_l≤d_l^{+}-d_l$$
+
+$$d_h^{′}≥d_h^{-} ⟹ d_h-δ_h≥d_h^{-} ⟹ δ_l≤d_h-d_h^{-}$$
+
+---
+
+In each step, we can minimize $𝐝^{′}⋅𝐮$ by choosing smallest $l$ and largest $h$ such that $δ_l>0.$ Then, choose largest $δ_l$ with fixed $l$ and $h$ without violating constraints. We obtain
+
+$$δ_l=\min\{d_l^{+}-d_l,d_h-d_h^{-},ϵ-\|𝐝\|/2\}.$$
+
+
+## Set of All Optimal Cross-assignments
+```julia
+using Combinatorics: permutations
+
+function ambiguity_set(k, d⁻, d⁺, ϵ)
+    Set(cross_assignment(k, d⁻[I′], d⁺[I′], ϵ)[I′] for I′ in permutations(1:k))
+end
+```
+
+We can the derive all the other solutions as permutations of inputs values.
+
 The discrete polyhedral uncertainty set is the set of optimal cross-assignments over all utility orderings.
 
 $$𝐃_𝐩=\{𝐝^{∗}(𝐮)∣𝐮∈ℝ^k\}=\{𝐝^{∗}(𝐮(I^{′}))∣I^{′}∈\mathcal{P}(I)\}.$$

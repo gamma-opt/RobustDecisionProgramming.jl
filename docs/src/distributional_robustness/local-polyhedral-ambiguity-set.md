@@ -1,22 +1,4 @@
 # [Local Polyhedral Ambiguity Set](@id local-polyhedral-ambiguity-set)
-## Problem
-We denote the minimizing deviation as
-
-$$𝐝^{∗}(𝐮)=\argmin_{𝐝∈\bar{𝐃}^{1}_𝐩} 𝔼(𝐝,𝐮).$$
-
-Given the parameters lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the uncertainty radius $ϵ∈[0,1],$ and an utility vector $(u_1,...,u_k),$ we can express finding the minimizing deviation over a polyhedral ambiguity set in the form:
-
-$$𝐝^{∗} = \argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k,$$
-
-$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\},$$
-
-$$d_1+d_2+...+d_k=0,$$
-
-$$|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
-
-We can solve the problem if we give an ordering for the utility vector. Since the utility vector is finite, it has a finite number of orderings. Therefore, the set of solutions for all the orderings forms the polyhedral ambiguity set.
-
-
 ## Optimal Cross-Assignment
 ```julia
 function cross_assignment(l::Int, h::Int, Σ::Float64, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
@@ -43,6 +25,12 @@ function cross_assignment(k::Int, d⁻::Vector{Float64}, d⁺::Vector{Float64}, 
 end
 ```
 
+Given parameters lower bound $-𝐩≤𝐝^{-}≤0$, upper bound $0≤𝐝^{+}≤1-𝐩$, and uncertainty radius $0≤ϵ≤1,$ we denote the minimizing deviation as
+
+$$𝐝^{∗}(𝐮)=\argmin_{𝐝∈\bar{𝐃}^{1}_𝐩} 𝔼(𝐝,𝐮).$$
+
+---
+
 The `cross_assignment` algorithm computes the optimal cross-assignment given an **utility ordering** of $u_1≤u_2≤...≤u_k,$ such that the sequence $(𝐝_0, Σ_0),(𝐝_1, Σ_1),...,(𝐝_n, Σ_n)$ converges toward the optimal cross-assignment $𝐝^{∗}=𝐝_n$ where $Σ_n=\|𝐝_n\|_1/2≤ϵ$ in at most $n≤k$ iterations. We have initial $Σ_0=0.$
 
 ---
@@ -60,9 +48,9 @@ $$\begin{aligned}
 &≤𝐝⋅𝐮.
 \end{aligned}$$
 
-The objective values are **negative** with the following initial value.
+The objective values are **negative** by choosing the initial value as follows.
 
-$$𝐝^{′}⋅𝐮≤𝐝_0⋅𝐮=𝟎 ⟹ 𝐝_0=𝟎.$$
+$$𝐝^{′}⋅𝐮≤𝐝_0⋅𝐮=0 ⟹ 𝐝_0=𝟎.$$
 
 The **upper** and **lower bound** constraints $δ$ as follows
 
@@ -77,7 +65,7 @@ $$δ=\min\{d_l^{+}-d_l,d_h-d_h^{-},ϵ-\|𝐝\|_1/2\}.$$
 We repeat this step until $h-l≤0$ for the smallest $l$ and largest $h$ or $ϵ-\|𝐝\|_1/2≤0.$
 
 
-## Set of All Optimal Cross-assignments
+## Set of Optimal Cross-assignments
 ```julia
 using Combinatorics: permutations
 

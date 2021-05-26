@@ -135,3 +135,21 @@ Given an initial cross-assignment $𝐝=(d_1,d_2,...,d_k),$ the recursive step u
     -  $l_1≤l_2$ and $δ_1=δ_2$ or
     -  $h_1≥h_2$ and $δ_1=δ_2$ or
     -  $δ_1≥δ_2$ where $l_1=l_2$ and $h_1=h_2$
+
+
+## Problem
+We denote the minimizing deviation as
+
+$$𝐝^{∗}(𝐮)=\argmin_{𝐝∈\bar{𝐃}^{1}_𝐩} 𝔼(𝐝,𝐮).$$
+
+Given the parameters lower bound $d_i^{-}∈[-p_i,0]$ and upper bound $d_i^{+}∈[0,1-p_i]$ for all $i∈\{1,...,k\},$ the uncertainty radius $ϵ∈[0,1],$ and an utility vector $(u_1,...,u_k),$ we can express finding the minimizing deviation over a polyhedral ambiguity set in the form:
+
+$$𝐝^{∗} = \argmin_{(d_1,...,d_k)∈ℝ^k} \, d_1⋅u_1 +d_2⋅u_2 +...+d_k⋅u_k,$$
+
+$$d_i^{-} ≤ d_i ≤ d_i^{+}, \quad ∀i∈\{1,...,k\},$$
+
+$$d_1+d_2+...+d_k=0,$$
+
+$$|d_1|+|d_2|+...+|d_k|≤2ϵ.$$
+
+We can solve the problem if we give an ordering for the utility vector. Since the utility vector is finite, it has a finite number of orderings. Therefore, the set of solutions for all the orderings forms the polyhedral ambiguity set.

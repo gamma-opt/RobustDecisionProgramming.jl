@@ -8,7 +8,7 @@ We define a vector of discrete **probabilities** associated with the states as
 
 $$𝐩=(p_1,p_2,...,p_k),$$
 
-such that all elements are greater or equal to zero $𝐩≥0$ and the sum of all elements is one $𝐩⋅𝟏(k)=1$ where $𝟏(k)=(1)^k$ is a vector of $k$ ones and $⋅$ is the dot product. We also define **utilities** associated with the states as a vector of real numbers
+such that all elements are greater or equal to zero $𝐩≥0$ and the sum of all elements is one $𝐩⋅𝟏_k=1$ where $𝟏_k=(1)^k$ is a vector of $k$ ones and $⋅$ is the dot product. We also define **utilities** associated with the states as a vector of real numbers
 
 $$𝐮=(u_1,u_2,...,u_k)∈ℝ^k.$$
 
@@ -64,13 +64,13 @@ $$𝐝^{-}≤𝐝≤𝐝^{+}.$$
 
 As a consequence from the properties of discrete probabilities, we obtain
 
-$$𝐪^{+}=𝐩+𝐝^{+}≤1 ⇒\quad 𝐝^{+}≤1-𝐩,$$
+$$𝐪^{+}=𝐩+𝐝^{+}≤1 ⟹ 𝐝^{+}≤1-𝐩,$$
 
-$$𝐪^{-}=𝐩+𝐝^{-}≥0 ⇒\quad 𝐝^{-}≥-𝐩.$$
+$$𝐪^{-}=𝐩+𝐝^{-}≥0 ⟹ 𝐝^{-}≥-𝐩.$$
 
 We also obtain the **conservation of probability mass** as
 
-$$𝐝⋅𝟏(k)=(𝐩-𝐪)⋅𝟏(k)=𝐩⋅𝟏(k)-𝐪⋅𝟏(k)=0.$$
+$$𝐝⋅𝟏_k=(𝐩-𝐪)⋅𝟏_k=𝐩⋅𝟏_k-𝐪⋅𝟏_k=0.$$
 
 Finally, we can limit the Wasserstein distance of uncertainty set elements from the pivot by constraining the magnitude of the deviation to $l∈ℕ$ norm less or equal to an **uncertainty radius** $0≤ϵ≤1$ as
 
@@ -82,11 +82,11 @@ By setting $ϵ=1$ we can make the magnitude constraint inactive.
 
 Given parameters lower bound $-𝐩≤𝐝^{-}≤0$, upper bound $0≤𝐝^{+}≤1-𝐩$, and uncertainty radius $0≤ϵ≤1,$ the **continuous local ambiguity set** is the set of all deviations that satisfy the defined constraints
 
-$$\bar{𝐃}_𝐩=\{𝐝∈[𝐝^{-},𝐝^{+}]∣ 𝐝⋅𝟏(k)=0,\, \|𝐝\|_l≤2ϵ\}.$$
+$$\bar{𝐃}^{l}_𝐩=\{𝐝∈[𝐝^{-},𝐝^{+}]∣ 𝐝⋅𝟏_k=0,\, \|𝐝\|_l≤2ϵ\}.$$
 
 The ambiguity set is convex, which makes optimization tractable. Smaller values of $l$ make the ambiguity set more pessimistic and larger values more optimistic. We refer to the ambiguity set as **polyhedral** when $l=1.$
 
-To form an explicit formulation of the mathematical programming model, we have to **discretize** the ambiguity set. A **discrete local ambiguity set** $𝐃_𝐩$ is a finite subset of $\bar{𝐃}_𝐩$ such that it contains all deviations $𝐝$ for all utility vectors $𝐮∈ℝ^{k}$ that can minimize the expected value. We can solve the discretization for [local polyhedral ambiguity set](@ref polyhedral-ambiguity-set) using the **cross-assignment** algorithm.
+To form an explicit formulation of the mathematical programming model, we have to **discretize** the ambiguity set. A **discrete local ambiguity set** $𝐃^{l}_𝐩$ is a finite subset of $\bar{𝐃}^{l}_𝐩$ such that it contains all deviations $𝐝$ for all utility vectors $𝐮∈ℝ^{k}$ that can minimize the expected value. We can solve the discretization for [local polyhedral ambiguity set](@ref local-polyhedral-ambiguity-set) using the **cross-assignment** algorithm.
 
 
 ## Proof of Convexity of Ambiguity Set
@@ -94,5 +94,5 @@ Let $𝐝_1,𝐝_2∈𝐃_𝐩,$ we must show that $𝐝∈𝐃_𝐩$ where $�
 
 1) Minimum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≥(1-λ)𝐝^{-}+λ𝐝^{-}=𝐝^{-}.$
 2) Maximum: $𝐝=(1-λ)𝐝_1+λ𝐝_2≤(1-λ)𝐝^{+}+λ𝐝^{+}=𝐝^{+}.$
-3) Conservation of probability mass: $𝐝⋅𝟏(k)=(1-λ)𝐝_1⋅𝟏(k)+λ𝐝_2⋅𝟏(k)=0$
+3) Conservation of probability mass: $𝐝⋅𝟏_k=(1-λ)𝐝_1⋅𝟏_k+λ𝐝_2⋅𝟏_k=0$
 4) Limit for magnitude (Triangle inequality): $\|𝐝\|_l≤(1-λ)\|𝐝_1\|_l+λ\|𝐝_2\|_l≤2ϵ$

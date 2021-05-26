@@ -84,28 +84,28 @@ function Deviation(p::Vector{Float64}, ϵ::Float64)
 end
 
 """Computes the optimal cross-assignment recursively."""
-function cross_assignment(l::Int, h::Int, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
-    if (h - l ≤ 0) || (ϵ ≤ 0)
+function cross_assignment(l::Int, h::Int, Σ::Float64, d::Vector{Float64}, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
+    if (h - l ≤ 0) || (ϵ-Σ ≤ 0)
         return d
     end
     δ_l = d⁺[l] - d[l]
     δ_h = d[h] - d⁻[h]
-    δ = min(δ_l, δ_h, ϵ)
+    δ = min(δ_l, δ_h, ϵ-Σ)
     d[l] += δ
     d[h] -= δ
     if δ_l < δ_h
-        return cross_assignment(l+1, h, d, d⁻, d⁺, ϵ-δ)
+        return cross_assignment(l+1, h, Σ+δ, d, d⁻, d⁺, ϵ)
     elseif δ_l > δ_h
-        return cross_assignment(l, h-1, d, d⁻, d⁺, ϵ-δ)
+        return cross_assignment(l, h-1, Σ+δ, d, d⁻, d⁺, ϵ)
     else
-        return cross_assignment(l+1, h-1, d, d⁻, d⁺, ϵ-δ)
+        return cross_assignment(l+1, h-1, Σ+δ, d, d⁻, d⁺, ϵ)
     end
 end
 
 """Compute cross-assignment."""
 function cross_assignment(k::Int, d⁻::Vector{Float64}, d⁺::Vector{Float64}, ϵ::Float64)
     d = zeros(k)
-    cross_assignment(1, k, d, d⁻, d⁺, ϵ)
+    cross_assignment(1, k, 0.0, d, d⁻, d⁺, ϵ)
 end
 
 """Computes the optimal cross assignment from deviation.

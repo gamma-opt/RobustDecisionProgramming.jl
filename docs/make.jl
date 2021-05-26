@@ -9,7 +9,7 @@ makedocs(
         "Home" => "index.md",
         "Distributional Robustness" => Any[
             "distributional_robustness/best-worst-case-expected-value.md",
-            "distributional_robustness/polyhedral-ambiguity-set.md",
+            "distributional_robustness/local-polyhedral-ambiguity-set.md",
             "distributional_robustness/distributionally-robust-decision-model.md"
             ],
         "api.md"

@@ -6,7 +6,7 @@ We denote the probability of state $s_i∈S_i$ with information path $s_{I(i)}�
 
 $$𝐩(s_{I(i)})=(ℙ(X_i=s_i∣X_{I(i)}=s_{I(i)})∣s_i∈S_i)$$
 
-Furthermore, we can use cross-assignment on the probability vector to form the optimal [Polyhedral Ambiguity Set](@ref polyhedral-ambiguity-set)
+Furthermore, we can use cross-assignment on the probability vector to form the optimal [Local Polyhedral Ambiguity Set](@ref local-polyhedral-ambiguity-set)
 
 $$𝐃_{𝐩(s_{I(i)})}.$$
 
